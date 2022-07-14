@@ -289,8 +289,6 @@ class NetworkManager{
 extension NetworkManager: TwitterBookmarksNetworkProtocol{
     func getPosts(parameters: [String: String],completion: @escaping ([Tweet]?,Includes?, Error?) -> ()){
         
-        // path = ""
-        
         
          var comp = components()
         comp.path = "/2/users/\(834009971746553856)/bookmarks"

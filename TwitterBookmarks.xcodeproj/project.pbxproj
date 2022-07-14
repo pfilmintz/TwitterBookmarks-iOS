@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040B8FEA2880A77600E37364 /* MyFolders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FE82880A77600E37364 /* MyFolders.xcdatamodeld */; };
+		040B8FF12880AA3B00E37364 /* Folder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FEF2880AA3B00E37364 /* Folder+CoreDataClass.swift */; };
+		040B8FF22880AA3B00E37364 /* Folder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FF02880AA3B00E37364 /* Folder+CoreDataProperties.swift */; };
+		040B8FF42880AA7900E37364 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FF32880AA7900E37364 /* CoreDataManager.swift */; };
+		040B8FF72880AF7500E37364 /* BookmarksFoldersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FF62880AF7500E37364 /* BookmarksFoldersVC.swift */; };
+		040B8FF92880B4C300E37364 /* FoldersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FF82880B4C300E37364 /* FoldersTableViewCell.swift */; };
 		0426E7E2287F395000235A7E /* TwitterBookmarksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */; };
 		0426E7EA287F39B900235A7E /* MockTwitterResponseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */; };
 		0426E7EC287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7EB287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift */; };
@@ -38,6 +44,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040B8FE92880A77600E37364 /* MyFolders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyFolders.xcdatamodel; sourceTree = "<group>"; };
+		040B8FEF2880AA3B00E37364 /* Folder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Folder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		040B8FF02880AA3B00E37364 /* Folder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Folder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		040B8FF32880AA7900E37364 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		040B8FF62880AF7500E37364 /* BookmarksFoldersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksFoldersVC.swift; sourceTree = "<group>"; };
+		040B8FF82880B4C300E37364 /* FoldersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersTableViewCell.swift; sourceTree = "<group>"; };
 		0426E7DF287F395000235A7E /* TwitterBookmarksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterBookmarksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBookmarksTests.swift; sourceTree = "<group>"; };
 		0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTwitterResponseClient.swift; sourceTree = "<group>"; };
@@ -79,6 +91,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040B8FE72880A09400E37364 /* BookmarksFolders */ = {
+			isa = PBXGroup;
+			children = (
+				040B8FF52880AF3F00E37364 /* Model */,
+				040B8FF62880AF7500E37364 /* BookmarksFoldersVC.swift */,
+				040B8FF82880B4C300E37364 /* FoldersTableViewCell.swift */,
+			);
+			path = BookmarksFolders;
+			sourceTree = "<group>";
+		};
+		040B8FF52880AF3F00E37364 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				040B8FF32880AA7900E37364 /* CoreDataManager.swift */,
+				040B8FE82880A77600E37364 /* MyFolders.xcdatamodeld */,
+				040B8FEF2880AA3B00E37364 /* Folder+CoreDataClass.swift */,
+				040B8FF02880AA3B00E37364 /* Folder+CoreDataProperties.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0426E7E0287F395000235A7E /* TwitterBookmarksTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +161,7 @@
 		04C7A852287B18BF0088A213 /* TwitterBookmarks */ = {
 			isa = PBXGroup;
 			children = (
+				040B8FE72880A09400E37364 /* BookmarksFolders */,
 				04C7A86C287B82810088A213 /* Bookmarks */,
 				04C7A867287B18CE0088A213 /* Network */,
 				04C7A853287B18BF0088A213 /* AppDelegate.swift */,
@@ -274,8 +308,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040B8FF12880AA3B00E37364 /* Folder+CoreDataClass.swift in Sources */,
+				040B8FF22880AA3B00E37364 /* Folder+CoreDataProperties.swift in Sources */,
 				043FA4DE287D3591003FDE6E /* Observable.swift in Sources */,
+				040B8FF42880AA7900E37364 /* CoreDataManager.swift in Sources */,
+				040B8FF72880AF7500E37364 /* BookmarksFoldersVC.swift in Sources */,
 				04C7A869287B190C0088A213 /* NetworkManager.swift in Sources */,
+				040B8FF92880B4C300E37364 /* FoldersTableViewCell.swift in Sources */,
 				0426E7EC287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift in Sources */,
 				04C7A870287B84520088A213 /* TextTableViewCell.swift in Sources */,
 				043FA4D9287D33C9003FDE6E /* BookmarksViewModel.swift in Sources */,
@@ -285,6 +324,7 @@
 				04C7A854287B18BF0088A213 /* AppDelegate.swift in Sources */,
 				04C7A856287B18BF0088A213 /* SceneDelegate.swift in Sources */,
 				04C7A872287B85790088A213 /* BookmarksVC.swift in Sources */,
+				040B8FEA2880A77600E37364 /* MyFolders.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +599,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		040B8FE82880A77600E37364 /* MyFolders.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				040B8FE92880A77600E37364 /* MyFolders.xcdatamodel */,
+			);
+			currentVersion = 040B8FE92880A77600E37364 /* MyFolders.xcdatamodel */;
+			path = MyFolders.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 04C7A848287B18BF0088A213 /* Project object */;
 }

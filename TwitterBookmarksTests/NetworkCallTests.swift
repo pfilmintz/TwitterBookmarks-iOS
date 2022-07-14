@@ -20,7 +20,6 @@ class TwitterApiResponseTest: XCTestCase{
         let exp = expectation(description: "Retrieve Bookmarks from Twitter")
         
         
-        
         let parameters = ["expansions":"attachments.media_keys", "media.fields": "media_key,preview_image_url,type,url"]
         
         
@@ -46,6 +45,7 @@ class TwitterApiResponseTest: XCTestCase{
                 exp.fulfill()
                 
             }catch let error {
+                //do catch comes with its own error param
                 XCTFail(error.localizedDescription)
             }
             
