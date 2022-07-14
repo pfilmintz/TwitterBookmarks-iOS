@@ -21,11 +21,14 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     var posts : [Tweet] = []
     
+    
+    
     //this creates a new instance of BookmarksViewModel
     private var viewModel = BookmarksViewModel()
     
     
     
+    //private var viewModel = BookmarksViewModel(postsCallbak: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +43,6 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         
         
         //wont work becasue viewModel is a new instance of BookmarksViewModel ie 2 different instances of the BookmarksViewModel class
-        
         //postsCallbak is not set in viewModel, and hence would not call the self.postsCallbak?(tweets) method in the BookmarksViewModel
         
         /*

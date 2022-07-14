@@ -10,6 +10,7 @@ import Foundation
 enum NetworkManagerError: Error{
     case badResponse(URLResponse?)
     case badData
+    case errorDecodingData
     case badLocalUrl
     case badUrl
     case errorDecodingImage
@@ -44,8 +45,7 @@ class NetworkManager{
         
         //https://api.twitter.com/2/users/:id/bookmarks
         var comp = URLComponents()
-       // comp.scheme = "https"
-       // comp.host = "api.unsplash.com"
+       
         comp.scheme = "https"
         comp.host = "api.twitter.com"
         return comp
@@ -53,7 +53,7 @@ class NetworkManager{
     
     private func request(url: URL) -> URLRequest{
         var request = URLRequest(url: url)
-        let BearerToken =  "Ql9IMGx1aXFTRVkwbUtLVU1wNk1xMXVyR0w4LWZhWTNnSWxDYXNza0MxNnZSOjE2NTc2Njc5ODQ5MTI6MTowOmF0OjE"
+        let BearerToken =  "Y3FldU1aUVdib2JYaFFtOTdBMGdYVG9IT3RrNHVna0JaSEU1UngxbHBMZXpuOjE2NTc3NTI0MTY3Njc6MTowOmF0OjE"
         
         request.addValue("Bearer \(BearerToken)", forHTTPHeaderField: "Authorization")
         
@@ -223,7 +223,7 @@ class NetworkManager{
 }
      */
     
-
+    
     
     func posts(parameters: [String: String],completion: @escaping ([Tweet]?,Includes?, Error?) -> ()){
         
@@ -242,9 +242,6 @@ class NetworkManager{
              }
              comp.queryItems = queryItems
         
-        
-        
-         
          let req = request(url: comp.url!)
         
         
@@ -261,6 +258,7 @@ class NetworkManager{
                       completion(nil,nil, NetworkManagerError.badResponse(response))
                       return
                   }
+            
             //making sure data exists
             guard let data = data else{
                 completion(nil,nil,NetworkManagerError.badData)
@@ -272,8 +270,72 @@ class NetworkManager{
             
             do{
                 
-                let response = try JSONDecoder().decode(TwitterAPIResponse.self, from: data)
-                completion(response.data,response.includes, nil)
+                
+                
+                let apiResponse = try JSONDecoder().decode(TwitterAPIResponse.self, from: data)
+                completion(apiResponse.data,apiResponse.includes, nil)
+                
+            }catch let error {
+                completion(nil,nil,error)
+            }
+        }
+        task.resume()
+        
+        
+    }
+}
+
+//making NetworkManager class conform to TwitterBookmarksNetworkProtocol protocol
+extension NetworkManager: TwitterBookmarksNetworkProtocol{
+    func getPosts(parameters: [String: String],completion: @escaping ([Tweet]?,Includes?, Error?) -> ()){
+        
+        // path = ""
+        
+        
+         var comp = components()
+        comp.path = "/2/users/\(834009971746553856)/bookmarks"
+         
+        
+        
+         
+         var queryItems = [URLQueryItem]()
+             for (key, value) in parameters {
+                 queryItems.append(URLQueryItem(name: key, value: value ))
+             }
+             comp.queryItems = queryItems
+        
+         let req = request(url: comp.url!)
+        
+        
+        let task = session.dataTask(with: req) { data, response, error in
+            //CHECKING for error
+            if let error = error{
+                completion(nil,nil, error)
+                return
+            }
+            
+            //making sure httpResponse is within 200 range ie success
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                      completion(nil,nil, NetworkManagerError.badResponse(response))
+                      return
+                  }
+            
+            //making sure data exists
+            guard let data = data else{
+                completion(nil,nil,NetworkManagerError.badData)
+                return
+                
+            }
+            
+            //decode data
+            
+            do{
+                
+                
+                
+                let apiResponse = try JSONDecoder().decode(TwitterAPIResponse.self, from: data)
+                completion(apiResponse.data,apiResponse.includes, nil)
                 
             }catch let error {
                 completion(nil,nil,error)

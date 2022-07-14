@@ -24,7 +24,12 @@ struct BookmarksViewModel {
             return self.posts.count
         }*/
     
-  //  var postsCallbak: (([Tweet]) -> ())?
+    var postsCallbak: (([Tweet]) -> ())?
+    
+    
+  /*  init(postsCallbak: (([Tweet]) -> ())?){
+        self.postsCallbak = postsCallbak
+    }*/
     
     
    

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0426E7E2287F395000235A7E /* TwitterBookmarksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */; };
+		0426E7EA287F39B900235A7E /* MockTwitterResponseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */; };
+		0426E7EC287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7EB287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift */; };
+		0426E7EE287F639500235A7E /* NetworkCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7ED287F639500235A7E /* NetworkCallTests.swift */; };
+		0426E7F0287F905800235A7E /* twitter_bookmars_response.json in Resources */ = {isa = PBXBuildFile; fileRef = 0426E7EF287F905800235A7E /* twitter_bookmars_response.json */; };
 		043FA4D9287D33C9003FDE6E /* BookmarksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FA4D8287D33C9003FDE6E /* BookmarksViewModel.swift */; };
 		043FA4DB287D33E9003FDE6E /* BookmarksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FA4DA287D33E9003FDE6E /* BookmarksModel.swift */; };
 		043FA4DE287D3591003FDE6E /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043FA4DD287D3591003FDE6E /* Observable.swift */; };
@@ -17,13 +22,28 @@
 		04C7A85D287B18C40088A213 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C7A85C287B18C40088A213 /* Assets.xcassets */; };
 		04C7A860287B18C40088A213 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C7A85E287B18C40088A213 /* LaunchScreen.storyboard */; };
 		04C7A869287B190C0088A213 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A868287B190C0088A213 /* NetworkManager.swift */; };
-		04C7A86B287B1E1D0088A213 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A86A287B1E1D0088A213 /* Post.swift */; };
 		04C7A86E287B82C00088A213 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A86D287B82C00088A213 /* FeedTableViewCell.swift */; };
 		04C7A870287B84520088A213 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A86F287B84520088A213 /* TextTableViewCell.swift */; };
 		04C7A872287B85790088A213 /* BookmarksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A871287B85790088A213 /* BookmarksVC.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0426E7E3287F395000235A7E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04C7A848287B18BF0088A213 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04C7A84F287B18BF0088A213;
+			remoteInfo = TwitterBookmarks;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0426E7DF287F395000235A7E /* TwitterBookmarksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterBookmarksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBookmarksTests.swift; sourceTree = "<group>"; };
+		0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTwitterResponseClient.swift; sourceTree = "<group>"; };
+		0426E7EB287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBookmarksNetworkProtocol.swift; sourceTree = "<group>"; };
+		0426E7ED287F639500235A7E /* NetworkCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCallTests.swift; sourceTree = "<group>"; };
+		0426E7EF287F905800235A7E /* twitter_bookmars_response.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = twitter_bookmars_response.json; sourceTree = "<group>"; };
 		043FA4D8287D33C9003FDE6E /* BookmarksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewModel.swift; sourceTree = "<group>"; };
 		043FA4DA287D33E9003FDE6E /* BookmarksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksModel.swift; sourceTree = "<group>"; };
 		043FA4DD287D3591003FDE6E /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -36,13 +56,19 @@
 		04C7A85F287B18C40088A213 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04C7A861287B18C40088A213 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C7A868287B190C0088A213 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		04C7A86A287B1E1D0088A213 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		04C7A86D287B82C00088A213 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		04C7A86F287B84520088A213 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		04C7A871287B85790088A213 /* BookmarksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0426E7DC287F395000235A7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		04C7A84D287B18BF0088A213 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -53,6 +79,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0426E7E0287F395000235A7E /* TwitterBookmarksTests */ = {
+			isa = PBXGroup;
+			children = (
+				0426E7ED287F639500235A7E /* NetworkCallTests.swift */,
+				0426E7E8287F395C00235A7E /* Mocks */,
+				0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */,
+			);
+			path = TwitterBookmarksTests;
+			sourceTree = "<group>";
+		};
+		0426E7E8287F395C00235A7E /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */,
+				0426E7EF287F905800235A7E /* twitter_bookmars_response.json */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		043FA4DC287D3410003FDE6E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -66,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				04C7A852287B18BF0088A213 /* TwitterBookmarks */,
+				0426E7E0287F395000235A7E /* TwitterBookmarksTests */,
 				04C7A851287B18BF0088A213 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				04C7A850287B18BF0088A213 /* TwitterBookmarks.app */,
+				0426E7DF287F395000235A7E /* TwitterBookmarksTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				04C7A868287B190C0088A213 /* NetworkManager.swift */,
-				04C7A86A287B1E1D0088A213 /* Post.swift */,
+				0426E7EB287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -118,6 +165,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0426E7DE287F395000235A7E /* TwitterBookmarksTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0426E7E7287F395000235A7E /* Build configuration list for PBXNativeTarget "TwitterBookmarksTests" */;
+			buildPhases = (
+				0426E7DB287F395000235A7E /* Sources */,
+				0426E7DC287F395000235A7E /* Frameworks */,
+				0426E7DD287F395000235A7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0426E7E4287F395000235A7E /* PBXTargetDependency */,
+			);
+			name = TwitterBookmarksTests;
+			productName = TwitterBookmarksTests;
+			productReference = 0426E7DF287F395000235A7E /* TwitterBookmarksTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		04C7A84F287B18BF0088A213 /* TwitterBookmarks */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 04C7A864287B18C40088A213 /* Build configuration list for PBXNativeTarget "TwitterBookmarks" */;
@@ -145,6 +210,10 @@
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
+					0426E7DE287F395000235A7E = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 04C7A84F287B18BF0088A213;
+					};
 					04C7A84F287B18BF0088A213 = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
@@ -164,11 +233,20 @@
 			projectRoot = "";
 			targets = (
 				04C7A84F287B18BF0088A213 /* TwitterBookmarks */,
+				0426E7DE287F395000235A7E /* TwitterBookmarksTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0426E7DD287F395000235A7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0426E7F0287F905800235A7E /* twitter_bookmars_response.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		04C7A84E287B18BF0088A213 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -182,12 +260,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0426E7DB287F395000235A7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0426E7E2287F395000235A7E /* TwitterBookmarksTests.swift in Sources */,
+				0426E7EE287F639500235A7E /* NetworkCallTests.swift in Sources */,
+				0426E7EA287F39B900235A7E /* MockTwitterResponseClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		04C7A84C287B18BF0088A213 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				043FA4DE287D3591003FDE6E /* Observable.swift in Sources */,
 				04C7A869287B190C0088A213 /* NetworkManager.swift in Sources */,
+				0426E7EC287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift in Sources */,
 				04C7A870287B84520088A213 /* TextTableViewCell.swift in Sources */,
 				043FA4D9287D33C9003FDE6E /* BookmarksViewModel.swift in Sources */,
 				043FA4DB287D33E9003FDE6E /* BookmarksModel.swift in Sources */,
@@ -196,11 +285,18 @@
 				04C7A854287B18BF0088A213 /* AppDelegate.swift in Sources */,
 				04C7A856287B18BF0088A213 /* SceneDelegate.swift in Sources */,
 				04C7A872287B85790088A213 /* BookmarksVC.swift in Sources */,
-				04C7A86B287B1E1D0088A213 /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0426E7E4287F395000235A7E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04C7A84F287B18BF0088A213 /* TwitterBookmarks */;
+			targetProxy = 0426E7E3287F395000235A7E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		04C7A859287B18BF0088A213 /* Main.storyboard */ = {
@@ -222,6 +318,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0426E7E5287F395000235A7E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5NJ7NTGXV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = minzter.TwitterBookmarksTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TwitterBookmarks.app/TwitterBookmarks";
+			};
+			name = Debug;
+		};
+		0426E7E6287F395000235A7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5NJ7NTGXV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = minzter.TwitterBookmarksTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TwitterBookmarks.app/TwitterBookmarks";
+			};
+			name = Release;
+		};
 		04C7A862287B18C40088A213 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -273,7 +405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -328,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -399,6 +531,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0426E7E7287F395000235A7E /* Build configuration list for PBXNativeTarget "TwitterBookmarksTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0426E7E5287F395000235A7E /* Debug */,
+				0426E7E6287F395000235A7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		04C7A84B287B18BF0088A213 /* Build configuration list for PBXProject "TwitterBookmarks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
