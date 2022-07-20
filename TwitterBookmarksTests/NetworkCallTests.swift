@@ -17,7 +17,7 @@ class TwitterApiResponseTest: XCTestCase{
     func testing_main_response_returned_successfully(){
         
         //this is what i am expecting
-        let exp = expectation(description: "Retrieve Bookmarks from Twitter")
+        let exp = expectation(description: "Retrieve Bookmarks from Twitter and convert to model")
         
         
         let parameters = ["expansions":"attachments.media_keys", "media.fields": "media_key,preview_image_url,type,url"]

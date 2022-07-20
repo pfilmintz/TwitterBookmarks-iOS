@@ -53,7 +53,7 @@ class NetworkManager{
     
     private func request(url: URL) -> URLRequest{
         var request = URLRequest(url: url)
-        let BearerToken =  "Y3FldU1aUVdib2JYaFFtOTdBMGdYVG9IT3RrNHVna0JaSEU1UngxbHBMZXpuOjE2NTc3NTI0MTY3Njc6MTowOmF0OjE"
+        let BearerToken =  "T2tPLUZWMzItYmtiMnFNUW5GR0VkNi16Nmk3czNxY1EwNFpWX0pmMmZZamZ3OjE2NTgyODAwNDIxMTg6MTowOmF0OjE"
         
         request.addValue("Bearer \(BearerToken)", forHTTPHeaderField: "Authorization")
         
@@ -270,7 +270,7 @@ class NetworkManager{
             
             do{
                 
-                
+                //test decoding logic if data is successfully received
                 
                 let apiResponse = try JSONDecoder().decode(TwitterAPIResponse.self, from: data)
                 completion(apiResponse.data,apiResponse.includes, nil)

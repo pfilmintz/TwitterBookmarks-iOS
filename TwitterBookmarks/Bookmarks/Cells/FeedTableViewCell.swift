@@ -24,6 +24,8 @@ struct feedTableViewCellViewModel{
     
     
     
+    
+    
     //i want to return a value when the request is done so i pass a closure as a param
     func retrieveOneImage(url: String, completion: @escaping (Data?) -> ()){
         

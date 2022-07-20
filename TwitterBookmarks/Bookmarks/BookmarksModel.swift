@@ -9,6 +9,13 @@ import Foundation
 
 
 
+struct localTweet {
+    var id: String
+    var posttext: String
+    var type: String
+    var urls: [String]?
+}
+
 struct Tweet: Codable{
     let id:String
     let text: String

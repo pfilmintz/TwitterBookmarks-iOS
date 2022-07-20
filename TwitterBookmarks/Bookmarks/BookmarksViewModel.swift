@@ -27,9 +27,10 @@ struct BookmarksViewModel {
     var postsCallbak: (([Tweet]) -> ())?
     
     
-  /*  init(postsCallbak: (([Tweet]) -> ())?){
-        self.postsCallbak = postsCallbak
+   /* init(service: NetworkManager){
+        self.networker = service
     }*/
+    
     
     
    
