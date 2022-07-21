@@ -34,6 +34,7 @@ class NetworkManager{
     
     private let cachedImages = [String: [Data]]()
     
+    //key of post mapped to data of images attached
     var imagesDataDisc = NSCache<NSString, NSArray>()
     
     
@@ -57,7 +58,7 @@ class NetworkManager{
     
     private func request(url: URL) -> URLRequest{
         var request = URLRequest(url: url)
-        let BearerToken =  "WV9rRFVzVDhxM1VGanJOSUVyU3R4ZUw0Q1NGd1JKVnJ4dG5uaFpwZUhMNmJzOjE2NTgzODA0MDYyNjc6MTowOmF0OjE"
+        let BearerToken =  "TTc5dWRTQW9HMFBFVU5sMHhCNDlMT2tGVUFXWWl5TGdhM0VfenVkbVJiWTh1OjE2NTgzODc2NTg4MDA6MTowOmF0OjE"
         
         request.addValue("Bearer \(BearerToken)", forHTTPHeaderField: "Authorization")
         
@@ -106,7 +107,6 @@ class NetworkManager{
         var images = [Data]()
         if let imagesData = imagesDataDisc.object(forKey: (id) as NSString){
             
-           
             
             for picture in imagesData{
                 
@@ -201,8 +201,10 @@ class NetworkManager{
         
         if let imageData = imagesDataDisc.object(forKey: (id) as NSString){
             let data = imageData[0] as! Data
+         //   print("\(imagesDataDisc) fuciomg IMAGES")
             
             completion(data,nil)
+            
             return
             
         }

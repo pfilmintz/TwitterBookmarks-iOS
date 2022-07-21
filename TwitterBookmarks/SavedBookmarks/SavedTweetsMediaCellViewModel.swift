@@ -114,8 +114,6 @@ struct savedTweetsMediaViewModel{
                 //return data from retrieveOneImage func
                 completion(image)
                
-               
-                
                 
                     
                 }else{

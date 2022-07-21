@@ -66,6 +66,8 @@ class MediaTableViewCell: UITableViewCell {
         stackview.axis = .horizontal
         stackview.distribution = .fillEqually
         stackview.spacing = 2
+        stackview.clipsToBounds = true
+        stackview.layer.cornerRadius = 8
         //stackview.layer.masksToBounds = true
      
        
@@ -78,7 +80,7 @@ class MediaTableViewCell: UITableViewCell {
         stackview.axis = .vertical
         stackview.distribution = .fillEqually
         stackview.spacing = 2
-        
+        stackview.clipsToBounds = true
         
 
        
@@ -93,7 +95,7 @@ class MediaTableViewCell: UITableViewCell {
         stackview.axis = .vertical
         stackview.distribution = .fill
         stackview.spacing = 2
-        
+        stackview.clipsToBounds = true
      
        
         return stackview
@@ -105,6 +107,8 @@ class MediaTableViewCell: UITableViewCell {
        
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
+        
+        
         
      //   image.layer.masksToBounds = true
 
@@ -263,7 +267,11 @@ class MediaTableViewCell: UITableViewCell {
         //     repostViewHidden = nil
         //   repostView.isHidden = true
         
-        
+       
+        image1.image = nil
+        image2.image = nil
+        image3.image = nil
+        image4.image = nil
         
         image1.isHidden = true
         image2.isHidden = true
@@ -309,10 +317,6 @@ class MediaTableViewCell: UITableViewCell {
         
         postTextLabel.text = tweet?.posttext
         
-        image1.image = nil
-        
-       
-        
         let postIdentifier = tweet?.id ?? ""
         
          representedIdentifier = postIdentifier
@@ -323,17 +327,19 @@ class MediaTableViewCell: UITableViewCell {
         
         
         
-        if(representedIdentifier == postIdentifier){
+        
         if(tweet?.type == "video"){
             
+            
+             image1.image = nil
              playButton.isHidden = false
             
-             imagesView.isHidden = false
+           //  imagesView.isHidden = false
              
              imagesStackViewR.isHidden = true
              image1.isHidden = false
             
-             image1.image = nil
+             
             
             let savedTweetImageUrls = (tweet?.urls) ?? []
          
@@ -346,7 +352,12 @@ class MediaTableViewCell: UITableViewCell {
             
             viewModel.LoadImage{ downloadedImage in
                 if let image = downloadedImage{
+                    if(self.representedIdentifier == postIdentifier){
                     self.image1.image = image
+                    }
+                    if(self.representedIdentifier != postIdentifier){
+                    self.image1.image = nil
+                    }
                 }
                 
             }
@@ -369,15 +380,23 @@ class MediaTableViewCell: UITableViewCell {
             
             
             if(tweetImageUrls.count == 1){
+                
+                image1.image = nil
             
-             imagesView.isHidden = false
+            // imagesView.isHidden = false
              imagesView.layer.cornerRadius = 8
              imagesStackViewR.isHidden = true
              image1.isHidden = false
                 
                 viewModel.LoadImage{ downloadedImage in
                     if let image = downloadedImage{
+                        if(self.representedIdentifier == postIdentifier){
                         self.image1.image = image
+                            
+                        }
+                        if(self.representedIdentifier != postIdentifier){
+                            self.image1.image = nil
+                        }
                     }
                     
                 }
@@ -389,10 +408,14 @@ class MediaTableViewCell: UITableViewCell {
                 
                 imagesStackViewR.isHidden = false
                
-                imagesView.isHidden = false
+               // imagesView.isHidden = false
                 
                 viewModel.LoadImages{ downloadedImages in
                     if let images = downloadedImages{
+                        
+                        if(self.representedIdentifier == postIdentifier){
+                            
+                        
                         var i = 0
                         
                         for image in images{
@@ -407,13 +430,18 @@ class MediaTableViewCell: UITableViewCell {
                         
                     i = i + 1
                         }
+                        
+                        }
+                        if(self.representedIdentifier != postIdentifier){
+                            
+                        }
                     }
                     
                 }
                 
             }
             
-        }
+        
     }
     }
     
@@ -422,7 +450,8 @@ class MediaTableViewCell: UITableViewCell {
         
         postTextLabel.text = savedTweetViewModel.posttext
         
-        image1.image = nil
+        
+      
         
        
         
@@ -436,12 +465,13 @@ class MediaTableViewCell: UITableViewCell {
         
         
         
-        if(representedIdentifier == postIdentifier){
+        
         if(savedTweetViewModel.type == "video"){
+            
              
              playButton.isHidden = false
             
-             imagesView.isHidden = false
+            // imagesView.isHidden = false
              imagesView.layer.cornerRadius = 8
              imagesStackViewR.isHidden = true
              image1.isHidden = false
@@ -449,7 +479,12 @@ class MediaTableViewCell: UITableViewCell {
             
             savedTweetViewModel.LoadImage{ downloadedImage in
                 if let image = downloadedImage{
+                    if(self.representedIdentifier == postIdentifier){
                     self.image1.image = image
+                    }
+                    if(self.representedIdentifier != postIdentifier){
+                        self.image1.image = nil
+                    }
                 }
                 
             }
@@ -461,21 +496,23 @@ class MediaTableViewCell: UITableViewCell {
                   
                   playButton.isHidden = true
                 
-               
-                
-                
                 let savedTweetUrls = savedTweetViewModel.urls ?? []
                 
                 if(savedTweetUrls.count == 1){
                 
-                 imagesView.isHidden = false
+                // imagesView.isHidden = false
                  imagesView.layer.cornerRadius = 8
                  imagesStackViewR.isHidden = true
                  image1.isHidden = false
                     
                     savedTweetViewModel.LoadImage{ downloadedImage in
                         if let image = downloadedImage{
+                            if(self.representedIdentifier == postIdentifier){
                             self.image1.image = image
+                            }
+                            if(self.representedIdentifier != postIdentifier){
+                                self.image1.image = nil
+                            }
                         }
                         
                     }
@@ -487,10 +524,11 @@ class MediaTableViewCell: UITableViewCell {
                     
                     imagesStackViewR.isHidden = false
                    
-                    imagesView.isHidden = false
+                 //   imagesView.isHidden = false
                     
                     savedTweetViewModel.LoadImages{ downloadedImages in
                         if let images = downloadedImages{
+                            if(self.representedIdentifier == postIdentifier){
                             var i = 0
                             
                             for image in images{
@@ -506,6 +544,7 @@ class MediaTableViewCell: UITableViewCell {
                         i = i + 1
                             }
                         }
+                        }
                         
                     }
                     
@@ -513,7 +552,7 @@ class MediaTableViewCell: UITableViewCell {
                 
             }
             
-        }
+        
         
         
     }
@@ -812,6 +851,8 @@ class MediaTableViewCell: UITableViewCell {
     }*/
     
     func setupConstrains(){
+        
+        imagesView.layer.masksToBounds = true
         
         contentView.addSubview(mainStack)
         contentView.addSubview(userImgView)

@@ -95,23 +95,7 @@ struct mediaTableViewCellViewModel{
     
     func LoadImages(completion: @escaping ([UIImage]?) -> ()){
         
-        if let imagesData = imagesDataDisc.object(forKey: (id!) as NSString){
-            
-            var images = [UIImage]()
-            
-            for picture in imagesData{
-                
-                let image = UIImage(data: picture as! Data)
-          
-                images.append(image!)
-            }
-            
-            
-            completion(images)
-            
-            
-        }else{
-            
+        
             retrieveMultipleImages2(urls: urls ?? [],id: id ?? "") { download_images in
                 if let images = download_images{
                     DispatchQueue.main.async {
@@ -121,7 +105,7 @@ struct mediaTableViewCellViewModel{
                     DispatchQueue.main.async {
                     completion(nil)
                     }
-                }
+                
             }
             
         }
@@ -129,33 +113,14 @@ struct mediaTableViewCellViewModel{
     
     func LoadImage(completion: @escaping (UIImage?) -> ()){
         
-      
-        
-        if let imageData = imagesDataDisc.object(forKey: (id!) as NSString){
-            
-            let data = imageData[0]
-            let image = UIImage(data: data as! Data)
-            
-            
-            completion(image)
-     
-            
-        }else{
-            
-           
-            
             retrieveOneImage2(url: urls?[0] ?? "",id: id ?? "") { downloadedImage  in
                 
-                
-            
                 if let image_data = downloadedImage{
-                    
                     
                     DispatchQueue.main.async {
                         
                         //using return value from callbakc as return value for LoadImage function
                         completion(image_data)
-                      
                         
                     }
                     
@@ -164,9 +129,7 @@ struct mediaTableViewCellViewModel{
                         completion(nil)
                         
                     }
-                }
-                
-                
+                    
             }
         }
         
@@ -176,9 +139,8 @@ struct mediaTableViewCellViewModel{
         
     }
     
-    //retrieve l=images from APi
-    //store in cache
-    //convert data to uiimage
+    
+    
     
     //i want to return a value when the request is done so i pass a closure as a param
     func retrieveOneImage2(url: String,id: String, completion: @escaping (UIImage?) -> ()) {
@@ -187,12 +149,7 @@ struct mediaTableViewCellViewModel{
         networker.image(url: url,id: id) { data, error in
             if let data = data {
                 
-                //append image in array because we want to make this function usable for photos when we append it in images array in cache
-                var imagesData = [Data]()
-                imagesData.append(data)
-                
-                //append image to local cache
-                self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
+             
                 
                 let image = UIImage(data: data)
                 
@@ -219,9 +176,7 @@ struct mediaTableViewCellViewModel{
         
         //pass in urls and result of complettion
         networker.downloadImages(urls: urls, id: id) { data, images,error in
-            
-            
-                var imagesData = [Data]()
+      
             
             var UIImages = [UIImage]()
                 
@@ -231,9 +186,7 @@ struct mediaTableViewCellViewModel{
                     
                     UIImages.append(image!)
                     
-                imagesData.append(picture)
                     
-                    imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
                     
                 }
             
@@ -246,16 +199,7 @@ struct mediaTableViewCellViewModel{
         }
    
     
-    //key of post mapped to keys of images attached
-    var xImagesDic = [String: [String]]()
     
-    //key of post mapped to data of images attached
-    
-    var imagesDataDisc = NSCache<NSString, NSArray>()
-    
-    
-    
-
  
  
     
@@ -285,47 +229,8 @@ struct mediaTableViewCellViewModel{
     }
     
     
+  
     
-    
-    
-    //i want to return a value when the request is done so i pass a closure as a param
-    func retrieveOneImage(url: String,id: String, completion: @escaping (Data?) -> ()){
-        
-        
-        networker.image(url: url,id: id) { data, error in
-            if let data = data {
-               // let image = UIImage(data: data)
-                
-                //return data from retrieveOneImage func
-                completion(data)
-                
-                
-                    
-                }else{
-               
-                    completion(data)
-                }
-                
-            }
-        
-            
-        }
-    
-    
-    
-    
-    func retrieveMultipleImages(urls: [String],id: String, completion: @escaping ([Data]?) -> ()){
-        
-        
-        //pass in urls and result of complettion
-        networker.downloadImages(urls: urls,id: id) { data, images,error in
-            
-            completion(images)
-
-        }
-        
-     
-        }
     
     //text: String?
     //id: String
