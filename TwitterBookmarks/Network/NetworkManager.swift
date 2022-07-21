@@ -34,6 +34,9 @@ class NetworkManager{
     
     private let cachedImages = [String: [Data]]()
     
+    var imagesDataDisc = NSCache<NSString, NSArray>()
+    
+    
   //  let url = URL(string: "https://api.twitter.com/2/users/")
     
     init(){
@@ -98,10 +101,30 @@ class NetworkManager{
     
     
     
-    func downloadImages(urls: [String],completion: @escaping (Data?,[Data],Error?) -> ()){
+    func downloadImages(urls: [String],id: String,completion: @escaping (Data?,[Data],Error?) -> ()){
+        
+        var images = [Data]()
+        if let imagesData = imagesDataDisc.object(forKey: (id) as NSString){
+            
+           
+            
+            for picture in imagesData{
+                
+                let image = picture as! Data
+          
+                images.append(image)
+            }
+            
+            
+            completion(nil,images,nil)
+            
+            return
+            
+            
+        }
         
         let group = DispatchGroup()
-        var images = [Data]()
+        
         
         var errorIfnoImagesareReturned =  NetworkManagerError.badUrl
         var dataIfAllImagesAreReturned = Data()
@@ -158,6 +181,9 @@ class NetworkManager{
             print(images)
             
             if(images.count > 1){
+                
+                self.imagesDataDisc.setObject(images as NSArray, forKey: (id) as NSString)
+                
                 completion(dataIfAllImagesAreReturned, images,nil)
             }else{
                 completion(nil,images,errorIfnoImagesareReturned)
@@ -171,7 +197,16 @@ class NetworkManager{
     }
 
     
-    func image(url: String,completion: @escaping (Data?,Error?) -> ()){
+    func image(url: String,id: String,completion: @escaping (Data?,Error?) -> ()){
+        
+        if let imageData = imagesDataDisc.object(forKey: (id) as NSString){
+            let data = imageData[0] as! Data
+            
+            completion(data,nil)
+            return
+            
+        }
+        
         let task = session.downloadTask(with: URL(string:url)!){
             localUrl, response, error in
             if let error = error {
@@ -197,6 +232,15 @@ class NetworkManager{
             do{
                 
                 let data = try Data(contentsOf: localUrl)
+                
+                //append image in array because we want to make this function usable for photos when we append it in images array in cache
+                var imagesData = [Data]()
+                imagesData.append(data)
+                
+                //append image to local cache
+                self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
+                
+                
                 completion(data, nil)
                 
             }catch let error {

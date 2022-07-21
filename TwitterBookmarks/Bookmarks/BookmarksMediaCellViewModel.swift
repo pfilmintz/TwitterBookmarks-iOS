@@ -112,7 +112,7 @@ struct mediaTableViewCellViewModel{
             
         }else{
             
-            retrieveMultipleImages2(urls: urls ?? []) { download_images in
+            retrieveMultipleImages2(urls: urls ?? [],id: id ?? "") { download_images in
                 if let images = download_images{
                     DispatchQueue.main.async {
                     completion(images)
@@ -144,7 +144,7 @@ struct mediaTableViewCellViewModel{
             
            
             
-           retrieveOneImage2(url: urls?[0] ?? "") { downloadedImage  in
+            retrieveOneImage2(url: urls?[0] ?? "",id: id ?? "") { downloadedImage  in
                 
                 
             
@@ -181,10 +181,10 @@ struct mediaTableViewCellViewModel{
     //convert data to uiimage
     
     //i want to return a value when the request is done so i pass a closure as a param
-    func retrieveOneImage2(url: String, completion: @escaping (UIImage?) -> ()) {
+    func retrieveOneImage2(url: String,id: String, completion: @escaping (UIImage?) -> ()) {
         
         
-        networker.image(url: url) { data, error in
+        networker.image(url: url,id: id) { data, error in
             if let data = data {
                 
                 //append image in array because we want to make this function usable for photos when we append it in images array in cache
@@ -192,7 +192,7 @@ struct mediaTableViewCellViewModel{
                 imagesData.append(data)
                 
                 //append image to local cache
-                self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (id!) as NSString)
+                self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
                 
                 let image = UIImage(data: data)
                 
@@ -214,11 +214,11 @@ struct mediaTableViewCellViewModel{
             
         }
     
-    func retrieveMultipleImages2(urls: [String], completion: @escaping ([UIImage]?) -> ()){
+    func retrieveMultipleImages2(urls: [String],id: String, completion: @escaping ([UIImage]?) -> ()){
         
         
         //pass in urls and result of complettion
-        networker.downloadImages(urls: urls) { data, images,error in
+        networker.downloadImages(urls: urls, id: id) { data, images,error in
             
             
                 var imagesData = [Data]()
@@ -233,7 +233,7 @@ struct mediaTableViewCellViewModel{
                     
                 imagesData.append(picture)
                     
-                    imagesDataDisc.setObject(imagesData as NSArray, forKey: (id)! as NSString)
+                    imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
                     
                 }
             
@@ -289,10 +289,10 @@ struct mediaTableViewCellViewModel{
     
     
     //i want to return a value when the request is done so i pass a closure as a param
-    func retrieveOneImage(url: String, completion: @escaping (Data?) -> ()){
+    func retrieveOneImage(url: String,id: String, completion: @escaping (Data?) -> ()){
         
         
-        networker.image(url: url) { data, error in
+        networker.image(url: url,id: id) { data, error in
             if let data = data {
                // let image = UIImage(data: data)
                 
@@ -314,11 +314,11 @@ struct mediaTableViewCellViewModel{
     
     
     
-    func retrieveMultipleImages(urls: [String], completion: @escaping ([Data]?) -> ()){
+    func retrieveMultipleImages(urls: [String],id: String, completion: @escaping ([Data]?) -> ()){
         
         
         //pass in urls and result of complettion
-        networker.downloadImages(urls: urls) { data, images,error in
+        networker.downloadImages(urls: urls,id: id) { data, images,error in
             
             completion(images)
 

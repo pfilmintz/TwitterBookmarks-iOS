@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		04082B9C2883C6320070F107 /* SavedBookmarksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04082B9B2883C6320070F107 /* SavedBookmarksVC.swift */; };
 		04082BA02883EE5A0070F107 /* SavedBookmarksVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04082B9F2883EE5A0070F107 /* SavedBookmarksVM.swift */; };
-		04082BB92885718C0070F107 /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04082BB82885718C0070F107 /* DummyViewController.swift */; };
 		04082BBB2885F87A0070F107 /* CustomPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04082BBA2885F87A0070F107 /* CustomPresentable.swift */; };
 		04082BC128861F910070F107 /* CoreDataManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04082BC028861F910070F107 /* CoreDataManager2.swift */; };
 		04082BC72886455E0070F107 /* CoreDataManager3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04082BC62886455E0070F107 /* CoreDataManager3.swift */; };
@@ -42,7 +41,6 @@
 		04C7A85D287B18C40088A213 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04C7A85C287B18C40088A213 /* Assets.xcassets */; };
 		04C7A860287B18C40088A213 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04C7A85E287B18C40088A213 /* LaunchScreen.storyboard */; };
 		04C7A869287B190C0088A213 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A868287B190C0088A213 /* NetworkManager.swift */; };
-		04C7A86E287B82C00088A213 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A86D287B82C00088A213 /* FeedTableViewCell.swift */; };
 		04C7A870287B84520088A213 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A86F287B84520088A213 /* TextTableViewCell.swift */; };
 		04C7A872287B85790088A213 /* BookmarksVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A871287B85790088A213 /* BookmarksVC.swift */; };
 /* End PBXBuildFile section */
@@ -60,7 +58,6 @@
 /* Begin PBXFileReference section */
 		04082B9B2883C6320070F107 /* SavedBookmarksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedBookmarksVC.swift; sourceTree = "<group>"; };
 		04082B9F2883EE5A0070F107 /* SavedBookmarksVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedBookmarksVM.swift; sourceTree = "<group>"; };
-		04082BB82885718C0070F107 /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
 		04082BBA2885F87A0070F107 /* CustomPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentable.swift; sourceTree = "<group>"; };
 		04082BC028861F910070F107 /* CoreDataManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager2.swift; sourceTree = "<group>"; };
 		04082BC62886455E0070F107 /* CoreDataManager3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager3.swift; sourceTree = "<group>"; };
@@ -96,7 +93,6 @@
 		04C7A85F287B18C40088A213 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04C7A861287B18C40088A213 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04C7A868287B190C0088A213 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		04C7A86D287B82C00088A213 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		04C7A86F287B84520088A213 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		04C7A871287B85790088A213 /* BookmarksVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				04C7A86F287B84520088A213 /* TextTableViewCell.swift */,
-				04C7A86D287B82C00088A213 /* FeedTableViewCell.swift */,
 				0467A4302883511C004C18B3 /* MediaTableViewCell.swift */,
 			);
 			path = Cells;
@@ -234,7 +229,6 @@
 				04C7A85C287B18C40088A213 /* Assets.xcassets */,
 				04C7A85E287B18C40088A213 /* LaunchScreen.storyboard */,
 				04C7A861287B18C40088A213 /* Info.plist */,
-				04082BB82885718C0070F107 /* DummyViewController.swift */,
 				04082BBA2885F87A0070F107 /* CustomPresentable.swift */,
 			);
 			path = TwitterBookmarks;
@@ -374,7 +368,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04082BB92885718C0070F107 /* DummyViewController.swift in Sources */,
 				041357DC288908DB00EE21ED /* SavedTweetsMediaCellViewModel.swift in Sources */,
 				04082BE428876C820070F107 /* TweetFolder+CoreDataProperties.swift in Sources */,
 				04082BE328876C820070F107 /* TweetFolder+CoreDataClass.swift in Sources */,
@@ -396,7 +389,6 @@
 				043FA4D9287D33C9003FDE6E /* BookmarksViewModel.swift in Sources */,
 				043FA4DB287D33E9003FDE6E /* BookmarksModel.swift in Sources */,
 				04082BA02883EE5A0070F107 /* SavedBookmarksVM.swift in Sources */,
-				04C7A86E287B82C00088A213 /* FeedTableViewCell.swift in Sources */,
 				0467A4312883511C004C18B3 /* MediaTableViewCell.swift in Sources */,
 				04C7A858287B18BF0088A213 /* ViewController.swift in Sources */,
 				04082BE128876C820070F107 /* SavedTweet+CoreDataClass.swift in Sources */,
