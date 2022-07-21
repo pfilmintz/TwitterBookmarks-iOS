@@ -37,6 +37,7 @@ class NetworkManager{
   //  let url = URL(string: "https://api.twitter.com/2/users/")
     
     init(){
+        
         let config = URLSessionConfiguration.default
         session = URLSession(configuration: config)
     }

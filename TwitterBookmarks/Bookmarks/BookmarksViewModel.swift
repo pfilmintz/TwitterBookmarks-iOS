@@ -15,7 +15,31 @@ struct BookmarksViewModel {
     var tweetImages: ImagesObservableObject<[Media]?> = ImagesObservableObject([])
     
     
+    //implicit refernce
+    //Building NetworkManager/using it directly
+    //decided or created in class/viewcontroller
     let networker = NetworkManager.shared
+    
+  //dependency injection
+    
+    //source is not decided in class/viewcontroller
+    //asking for an instance of NetworkManager
+    //
+    //  let networker: NetworkManager = .shared - property injection
+    //networker must be let
+    
+    //use property injection when view loads first storyboard since you cant use initializer constructor
+    
+    //can use new instance
+    //let networker2: NetworkManager = NetworkManager()
+    
+    
+    //initializer/constructor
+    /* init(networker: NetworkManager){   injection
+         self.networker = networker
+     }*/
+    
+    //initializer  declared in class means its mandated in class and must be included when class/struct is created
     
     var posts : [Tweet] = []
     var images: [Media]? = []

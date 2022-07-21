@@ -116,7 +116,11 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
                   
                   let savedpost = localTweet(id: id ?? "", posttext: post ?? "",type: type ?? "", urls: url )
                   
-                  cell.loadSavedTwwet(savedpost)
+                  let savedTweet = savedTweetsMediaViewModel(tweet: savedpost)
+                  
+                  
+                  
+                 cell.loadSavedTweet(savedTweet)
                   
                   
                   return cell

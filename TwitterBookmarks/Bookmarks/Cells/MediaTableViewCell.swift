@@ -16,7 +16,168 @@ struct saveTweetData{
     var media: [String]
 }
 
+struct savedTweetsMediaViewModel{
+    
+    let networker: NetworkManager = NetworkManager.shared
+    
+    var id: String
+    var posttext: String
+    var type: String
+    var urls: [String]?
+    
+    //key of post mapped to keys of images attached
+    var xImagesDic = [String: [String]]()
+    
+    //key of post mapped to data of images attached
+    
+    var imagesDataDisc = NSCache<NSString, NSArray>()
+    
+    var representedIdentifier = ""
+    
+    init(tweet: localTweet){
+        id = tweet.id
+        posttext = tweet.posttext
+        type = tweet.type
+        urls = tweet.urls
+        
+    }
+    
+    
+    //if loaded, retrieve image from cache
+    //else
+    //load from network
+    
+    
+    //function accepts a closure as param and returns an image
+    func LoadImage(completion: @escaping (UIImage?) -> ()){
+        
+      
+        
+        if let imageData = imagesDataDisc.object(forKey: (id) as NSString){
+            
+            let data = imageData[0]
+            let image = UIImage(data: data as! Data)
+            
+            
+            completion(image)
+          //  return image
+            
+        }else{
+            
+           
+            
+           retrieveOneImage2(url: urls?[0] ?? "") { downloadedImage  in
+                
+                
+            
+                if let image_data = downloadedImage{
+                    
+                    
+                    DispatchQueue.main.async {
+                        
+                        //using return value from callbakc as return value for LoadImage function
+                        completion(image_data)
+                      
+                        
+                    }
+                    
+                }else{
+                    DispatchQueue.main.async {
+                        completion(nil)
+                        
+                    }
+                }
+                
+                
+            }
+        }
+        
+        
+    }
+    
+    //retrieve l=images from APi
+    //store in cache
+    //convert data to uiimage
+    
+    //i want to return a value when the request is done so i pass a closure as a param
+    func retrieveOneImage2(url: String, completion: @escaping (UIImage?) -> ()) {
+        
+        
+        networker.image(url: url) { data, error in
+            if let data = data {
+                
+                //append image in array because we want to make this function usable for photos when we append it in images array in cache
+                var imagesData = [Data]()
+                imagesData.append(data)
+                
+                //append image to local cache
+                self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
+                
+                let image = UIImage(data: data)
+                
+                //return data from retrieveOneImage func
+                completion(image)
+               
+               
+                
+                
+                    
+                }else{
+               
+                    completion(nil)
+                    
+                }
+                
+            }
+        
+            
+        }
+    
+    /*
+     
+     viewModel.retrieveOneImage(url: Imageurl) { downloadedImage in
+         if let image_data = downloadedImage{
+             //image from API
+             let image = UIImage(data: image_data)
+             
+             //append image in array because we want to make this function usable for photos
+             var imagesData = [Data]()
+             imagesData.append(image_data)
+             
+             //checking if image is appended to right cell
+             
+             if( self.representedIdentifier == representedCellIdentifier){
+                 DispatchQueue.main.async {
+                 self.image1.image = image
+                     
+                     //append image to local cache
+                     self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
+                     
+                 }
+             }
+             if(self.representedIdentifier != representedCellIdentifier){
+                 DispatchQueue.main.async {
+                 self.image1.image = nil
+                 }
+             }
+         }else{
+             DispatchQueue.main.async {
+             self.image1.image = nil
+             }
+         }
+     }
+     
+     */
+    
+    
+    
+}
+
 struct mediaTableViewCellViewModel{
+    
+    
+    
+    //viewmodel doesnt depend on view
     
   //  let bookmarksViewModel = BookmarksViewModel()
     
@@ -97,6 +258,10 @@ struct mediaTableViewCellViewModel{
             
         }
     
+    func loadVideoImage(){
+        
+    }
+    
     func retrieveMultipleImages(urls: [String], completion: @escaping ([Data]?) -> ()){
         
         
@@ -110,7 +275,9 @@ struct mediaTableViewCellViewModel{
      
         }
     
-    
+    //text: String?
+    //id: String
+    //media: [String]?
     
 }
 
@@ -118,15 +285,7 @@ struct mediaTableViewCellViewModel{
 
 class MediaTableViewCell: UITableViewCell {
     
-    var viewModel = mediaTableViewCellViewModel()
-    
-    var menuButtonAction : (() -> ())?
-
-    var Images = [UIImageView?]()
-
-    var representedIdentifier = ""
-
-    static let identifier = "MediaTableViewCell"
+  
 
     
 
@@ -281,10 +440,10 @@ class MediaTableViewCell: UITableViewCell {
     }()
 
     //key of post mapped to keys of images attached
-    var xImagesDic = [String: [String]]()
+   var xImagesDic = [String: [String]]()
     
     //key of post mapped to data of images attached
-  //  var imagesDataDisc = NSCache [String: [Data]]()
+   // var imagesDataDisc = NSCache [String: [Data]]()
     
     var imagesDataDisc = NSCache<NSString, NSArray>()
 
@@ -385,19 +544,69 @@ class MediaTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    var viewModel = mediaTableViewCellViewModel()
     
-    func loadSavedTwwet(_ savedTweet: localTweet){
+    
+    
+    
+    
+    var menuButtonAction : (() -> ())?
+
+    var Images = [UIImageView?]()
+
+    var representedIdentifier = ""
+
+    static let identifier = "MediaTableViewCell"
+    
+    
+    //using data from view MOdel to load views
+    func loadSavedTweet(_ savedTweetViewModel: savedTweetsMediaViewModel){
         
-        postTextLabel.text = savedTweet.posttext
+        postTextLabel.text = savedTweetViewModel.posttext
         
-        let representedCellIdentifier = savedTweet.id
+        image1.image = nil
         
-         representedIdentifier = representedCellIdentifier
+       
         
-        var Imageurl = ""
+        let postIdentifier = savedTweetViewModel.id
+        
+         representedIdentifier = postIdentifier
+        
+        //if cell id == post.id
+        //cell hasnt bn recycled
+        
+        if(representedIdentifier == postIdentifier){
+        if(savedTweetViewModel.type == "video"){
+             
+             playButton.isHidden = false
+            
+             imagesView.isHidden = false
+             imagesView.layer.cornerRadius = 8
+             imagesStackViewR.isHidden = true
+             image1.isHidden = false
+       
+            
+            savedTweetViewModel.LoadImage{ downloadedImage in
+                if let image = downloadedImage{
+                    self.image1.image = image
+                }
+                
+            }
+            
+            
+        }
+            
+        }
         
         
-        if(savedTweet.type == "video"){
+        
+        
+        
+      /*
+       
+       var Imageurl = ""
+       
+       if(savedTweetViewModel.type == "video"){
             
             playButton.isHidden = false
            
@@ -406,11 +615,11 @@ class MediaTableViewCell: UITableViewCell {
             imagesStackViewR.isHidden = true
             image1.isHidden = false
            
-            image1.image = nil
+           
             
-            Imageurl = savedTweet.urls?[0] ?? ""
+            Imageurl = savedTweetViewModel.urls?[0] ?? ""
             
-            if let imageData = imagesDataDisc.object(forKey: (savedTweet.id) as NSString){
+            if let imageData = imagesDataDisc.object(forKey: (savedTweetViewModel.id) as NSString){
                 
                // let data = imagesDataDisc[(feedposts?.id)!]![0]
                 
@@ -426,16 +635,21 @@ class MediaTableViewCell: UITableViewCell {
             
             viewModel.retrieveOneImage(url: Imageurl) { downloadedImage in
                 if let image_data = downloadedImage{
+                    //image from API
                     let image = UIImage(data: image_data)
                     
+                    //append image in array because we want to make this function usable for photos
                     var imagesData = [Data]()
                     imagesData.append(image_data)
+                    
+                    //checking if image is appended to right cell
                     
                     if( self.representedIdentifier == representedCellIdentifier){
                         DispatchQueue.main.async {
                         self.image1.image = image
                             
-                            self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweet.id) as NSString)
+                            //append image to local cache
+                            self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
                             
                         }
                     }
@@ -452,22 +666,22 @@ class MediaTableViewCell: UITableViewCell {
             }
         }
             
-        }
+        }*/
         
-        if(savedTweet.type == "photo"){
+     /*   if(savedTweetViewModel.type == "photo"){
             
             playButton.isHidden = true
             
             var imageUrls = [String]()
-            Imageurl = savedTweet.urls?[0] ?? ""
+            Imageurl = savedTweetViewModel.urls?[0] ?? ""
             
             
             
-            for image in savedTweet.urls ?? [] {
+            for image in savedTweetViewModel.urls ?? [] {
                 imageUrls.append(image)
             }
             
-            var savedTweetUrls = savedTweet.urls ?? []
+            var savedTweetUrls = savedTweetViewModel.urls ?? []
           
             
             
@@ -480,7 +694,7 @@ class MediaTableViewCell: UITableViewCell {
             
              image1.image = nil
                 
-                if let imageData = imagesDataDisc.object(forKey: (savedTweet.id) as NSString){
+                if let imageData = imagesDataDisc.object(forKey: (savedTweetViewModel.id) as NSString){
                     
                    // let data = imagesDataDisc[(feedposts?.id)!]![0]
                     
@@ -506,7 +720,7 @@ class MediaTableViewCell: UITableViewCell {
                                 DispatchQueue.main.async {
                                 self.image1.image = image
                                     
-                                    self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweet.id) as NSString)
+                                    self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
                                     
                                 }
                             }
@@ -532,7 +746,7 @@ class MediaTableViewCell: UITableViewCell {
                 
                  imagesView.isHidden = false
                 
-                if let imagesData = imagesDataDisc.object(forKey: (savedTweet.id) as NSString){
+                if let imagesData = imagesDataDisc.object(forKey: (savedTweetViewModel.id) as NSString){
                     var i = 0
                     for picture in imagesData{
                         
@@ -577,7 +791,7 @@ class MediaTableViewCell: UITableViewCell {
                                 
                                     self.Images[i]?.image = image
                                     
-                                    self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweet.id) as NSString)
+                                    self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
                                     
                                // self.imagesDataDisc[(feedposts?.id)!] = imagesData
                                 
@@ -592,7 +806,7 @@ class MediaTableViewCell: UITableViewCell {
             }
             }
             
-        }
+        }*/
     }
     
     func loadViews(feedposts: Tweet?) {
@@ -654,7 +868,7 @@ class MediaTableViewCell: UITableViewCell {
                  playButton.isHidden = false
                 
                  imagesView.isHidden = false
-                 imagesView.layer.cornerRadius = 8
+                 
                  imagesStackViewR.isHidden = true
                  image1.isHidden = false
                 
@@ -683,6 +897,7 @@ class MediaTableViewCell: UITableViewCell {
                     let image = UIImage(data: data as! Data)
                     if( representedIdentifier == representedIdentifier){
                      image1.image = image
+                        
                         
                     }
                     
@@ -814,10 +1029,10 @@ class MediaTableViewCell: UITableViewCell {
                                     self.Images[i]?.image = nil
                                     self.Images[i]?.isHidden = false
                                 
-                                    self.imagesView.layer.cornerRadius = 8
+                                    
                                 
                                     self.Images[i]?.image = image
-                                    
+                                    self.imagesView.layer.cornerRadius = 8
                                     
                                 
                                 i = i + 1
@@ -844,9 +1059,11 @@ class MediaTableViewCell: UITableViewCell {
                                         self.Images[i]?.image = nil
                                         self.Images[i]?.isHidden = false
                                     
-                                        self.imagesView.layer.cornerRadius = 8
+                                        
                                     
                                         self.Images[i]?.image = image
+                                        
+                                        self.imagesView.layer.cornerRadius = 8
                                         
                                         self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (feedposts?.id)! as NSString)
                                         

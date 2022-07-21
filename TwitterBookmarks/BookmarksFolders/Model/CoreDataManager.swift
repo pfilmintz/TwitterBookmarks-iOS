@@ -25,7 +25,11 @@ class CoreDataManager  {
      static var defaultClass = ""
      
   
-
+//Dependency injection means item/property used can be injected from outside
+    //or item used is mafe a property that can receive a value from outside
+    
+    //implicit means the property/variable is created/implemented in the class with no external reference or linkage
+    
     
    // private let modelName = ""
     
