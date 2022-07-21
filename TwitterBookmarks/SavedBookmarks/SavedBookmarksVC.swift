@@ -114,12 +114,13 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
                   let id = tweet.key as String?
                   let url = tweet.media as [String]?
                   
+                  //data in model
                   let savedpost = localTweet(id: id ?? "", posttext: post ?? "",type: type ?? "", urls: url )
                   
+                  //pass data from model to VM
                   let savedTweet = savedTweetsMediaViewModel(tweet: savedpost)
                   
-                  
-                  
+                  //pass data from VM to View(cell)
                  cell.loadSavedTweet(savedTweet)
                   
                   

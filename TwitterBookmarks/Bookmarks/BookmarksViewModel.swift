@@ -42,6 +42,9 @@ struct BookmarksViewModel {
     //initializer  declared in class means its mandated in class and must be included when class/struct is created
     
     var posts : [Tweet] = []
+    
+    
+    
     var images: [Media]? = []
                              
    /* func numberOrRows() -> Int {

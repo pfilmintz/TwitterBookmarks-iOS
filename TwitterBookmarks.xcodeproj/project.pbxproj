@@ -24,6 +24,8 @@
 		040B8FF92880B4C300E37364 /* FoldersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FF82880B4C300E37364 /* FoldersTableViewCell.swift */; };
 		040B8FFB2880D95000E37364 /* SelectBookmarkFolderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FFA2880D95000E37364 /* SelectBookmarkFolderVC.swift */; };
 		040B8FFD2880DC5B00E37364 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040B8FFC2880DC5B00E37364 /* PresentationController.swift */; };
+		041357DC288908DB00EE21ED /* SavedTweetsMediaCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041357DB288908DB00EE21ED /* SavedTweetsMediaCellViewModel.swift */; };
+		041357DE2889092100EE21ED /* BookmarksMediaCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041357DD2889092100EE21ED /* BookmarksMediaCellViewModel.swift */; };
 		0426E7E2287F395000235A7E /* TwitterBookmarksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */; };
 		0426E7EA287F39B900235A7E /* MockTwitterResponseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */; };
 		0426E7EC287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0426E7EB287F619A00235A7E /* TwitterBookmarksNetworkProtocol.swift */; };
@@ -73,6 +75,8 @@
 		040B8FF82880B4C300E37364 /* FoldersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersTableViewCell.swift; sourceTree = "<group>"; };
 		040B8FFA2880D95000E37364 /* SelectBookmarkFolderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectBookmarkFolderVC.swift; sourceTree = "<group>"; };
 		040B8FFC2880DC5B00E37364 /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresentationController.swift; path = "../../Minztership iOS/Minztership/utils/PresentationController.swift"; sourceTree = "<group>"; };
+		041357DB288908DB00EE21ED /* SavedTweetsMediaCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedTweetsMediaCellViewModel.swift; sourceTree = "<group>"; };
+		041357DD2889092100EE21ED /* BookmarksMediaCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksMediaCellViewModel.swift; sourceTree = "<group>"; };
 		0426E7DF287F395000235A7E /* TwitterBookmarksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterBookmarksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0426E7E1287F395000235A7E /* TwitterBookmarksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterBookmarksTests.swift; sourceTree = "<group>"; };
 		0426E7E9287F39B900235A7E /* MockTwitterResponseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTwitterResponseClient.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 				04082B9A2883C5F90070F107 /* SavedBookmarkModel */,
 				04082B9B2883C6320070F107 /* SavedBookmarksVC.swift */,
 				04082B9F2883EE5A0070F107 /* SavedBookmarksVM.swift */,
+				041357DB288908DB00EE21ED /* SavedTweetsMediaCellViewModel.swift */,
 			);
 			path = SavedBookmarks;
 			sourceTree = "<group>";
@@ -252,6 +257,7 @@
 				043FA4D8287D33C9003FDE6E /* BookmarksViewModel.swift */,
 				043FA4DA287D33E9003FDE6E /* BookmarksModel.swift */,
 				040B8FFA2880D95000E37364 /* SelectBookmarkFolderVC.swift */,
+				041357DD2889092100EE21ED /* BookmarksMediaCellViewModel.swift */,
 			);
 			path = Bookmarks;
 			sourceTree = "<group>";
@@ -369,9 +375,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				04082BB92885718C0070F107 /* DummyViewController.swift in Sources */,
+				041357DC288908DB00EE21ED /* SavedTweetsMediaCellViewModel.swift in Sources */,
 				04082BE428876C820070F107 /* TweetFolder+CoreDataProperties.swift in Sources */,
 				04082BE328876C820070F107 /* TweetFolder+CoreDataClass.swift in Sources */,
 				043FA4DE287D3591003FDE6E /* Observable.swift in Sources */,
+				041357DE2889092100EE21ED /* BookmarksMediaCellViewModel.swift in Sources */,
 				04082BE228876C820070F107 /* SavedTweet+CoreDataProperties.swift in Sources */,
 				04082BBB2885F87A0070F107 /* CustomPresentable.swift in Sources */,
 				04082BC72886455E0070F107 /* CoreDataManager3.swift in Sources */,

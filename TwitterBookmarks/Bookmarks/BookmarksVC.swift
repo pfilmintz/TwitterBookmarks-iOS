@@ -140,7 +140,8 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         
         feedposts = posts[indexPath.row]
         
-       //mvvvm cell only handles UI stuff
+       //mvvvm
+        //cell only handles UI stuff
         
        
             
@@ -153,8 +154,27 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
                     cell.viewModel.tweetImagesData = images
                 }
                 
+                //pass data from model to VM
+                cell.viewModel.retrievedPosts = feedposts
                 
-                cell.loadViews(feedposts: feedposts)
+                
+                //get only data that cell will use from model
+                let tweetPosts = cell.viewModel.getPost(tweet: feedposts)
+                
+                let viewModel = retrievedTweet(id: tweetPosts?.id ?? "", posttext: tweetPosts?.posttext ?? "", type: tweetPosts?.type ?? "", urls: tweetPosts?.urls ?? [])
+                
+                
+                
+                
+                //paass data from VM to cell(view)
+                cell.loadTweet(tweet: viewModel)
+                
+                
+                
+                //cell.loadViews(feedposts: feedposts)
+                
+                
+                
        
                 cell.menuButtonAction = {[weak self] in
                     

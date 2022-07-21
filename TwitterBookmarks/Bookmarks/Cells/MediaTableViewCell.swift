@@ -16,306 +16,7 @@ struct saveTweetData{
     var media: [String]
 }
 
-struct savedTweetsMediaViewModel{
-    
-    let networker: NetworkManager = NetworkManager.shared
-    
-    var id: String
-    var posttext: String
-    var type: String
-    var urls: [String]?
-    
-    //key of post mapped to keys of images attached
-    var xImagesDic = [String: [String]]()
-    
-    //key of post mapped to data of images attached
-    
-    var imagesDataDisc = NSCache<NSString, NSArray>()
-    
-    var representedIdentifier = ""
-    
-    init(tweet: localTweet){
-        id = tweet.id
-        posttext = tweet.posttext
-        type = tweet.type
-        urls = tweet.urls
-        
-    }
-    
-    
-    //if loaded, retrieve image from cache
-    //else
-    //load from network
-    
-    
-    //function accepts a closure as param and returns an image
-    
-    func LoadImages(completion: @escaping ([UIImage]?) -> ()){
-        
-        if let imagesData = imagesDataDisc.object(forKey: (id) as NSString){
-            
-            var images = [UIImage]()
-            
-            for picture in imagesData{
-                
-                let image = UIImage(data: picture as! Data)
-          
-                images.append(image!)
-            }
-            
-            
-            completion(images)
-            
-            
-        }else{
-            
-            retrieveMultipleImages2(urls: urls ?? []) { download_images in
-                if let images = download_images{
-                    DispatchQueue.main.async {
-                    completion(images)
-                    }
-                }else{
-                    DispatchQueue.main.async {
-                    completion(nil)
-                    }
-                }
-            }
-            
-        }
-    }
-    
-    func LoadImage(completion: @escaping (UIImage?) -> ()){
-        
-      
-        
-        if let imageData = imagesDataDisc.object(forKey: (id) as NSString){
-            
-            let data = imageData[0]
-            let image = UIImage(data: data as! Data)
-            
-            
-            completion(image)
-     
-            
-        }else{
-            
-           
-            
-           retrieveOneImage2(url: urls?[0] ?? "") { downloadedImage  in
-                
-                
-            
-                if let image_data = downloadedImage{
-                    
-                    
-                    DispatchQueue.main.async {
-                        
-                        //using return value from callbakc as return value for LoadImage function
-                        completion(image_data)
-                      
-                        
-                    }
-                    
-                }else{
-                    DispatchQueue.main.async {
-                        completion(nil)
-                        
-                    }
-                }
-                
-                
-            }
-        }
-        
-    
-            
-        
-        
-    }
-    
-    //retrieve l=images from APi
-    //store in cache
-    //convert data to uiimage
-    
-    //i want to return a value when the request is done so i pass a closure as a param
-    func retrieveOneImage2(url: String, completion: @escaping (UIImage?) -> ()) {
-        
-        
-        networker.image(url: url) { data, error in
-            if let data = data {
-                
-                //append image in array because we want to make this function usable for photos when we append it in images array in cache
-                var imagesData = [Data]()
-                imagesData.append(data)
-                
-                //append image to local cache
-                self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
-                
-                let image = UIImage(data: data)
-                
-                //return data from retrieveOneImage func
-                completion(image)
-               
-               
-                
-                
-                    
-                }else{
-               
-                    completion(nil)
-                    
-                }
-                
-            }
-        
-            
-        }
-    
-    func retrieveMultipleImages2(urls: [String], completion: @escaping ([UIImage]?) -> ()){
-        
-        
-        //pass in urls and result of complettion
-        networker.downloadImages(urls: urls) { data, images,error in
-            
-            
-                var imagesData = [Data]()
-            
-            var UIImages = [UIImage]()
-                
-                for picture in images{
-                    
-                    let image = UIImage(data: picture)
-                    
-                    UIImages.append(image!)
-                    
-                imagesData.append(picture)
-                    
-                imagesDataDisc.setObject(imagesData as NSArray, forKey: (id) as NSString)
-                    
-                }
-            
-            
-            completion(UIImages)
 
-        }
-        
-     
-        }
-    
-    
-    
-    
-    
-    
-}
-
-struct mediaTableViewCellViewModel{
-    
-    
-    
-    //viewmodel doesnt depend on view
-    
-  //  let bookmarksViewModel = BookmarksViewModel()
-    
-    var savedTweets = [String:saveTweetData]()
-    
-    
-    let networker = NetworkManager.shared
-    
-    
-    //receives data from BookmarksVc that listens to ntoifc from bookmarksVM
-    //data is received from BookmarksVc through cell.feedTableViewCellViewModel.tweetImagesData
-    var tweetImagesData: [Media]? = []
-    
-   
- /*   let coreDataManager: CoreDataManagerProtocol
-
-        init(coreDataManager: CoreDataManagerProtocol) { // "initializer based" injection
-            self.coreDataManager = coreDataManager
-        }
-    */
-    
-    
-    func saveToFolder(post: Tweet,type: String, urls: [String],folderName: String ){
-        
-      
-        
-        //save post to Core Data with Unique ID
-      //  CoreDataManager.addTweetToFolder(folderId, post, type, urls)
-        
-        CoreDataManager.shared.addTweetToFolder(folderName, post, type, urls)
-        
-        /*
-      if(CoreDataManager.defaultClass != "localTweets"){
-        
-        CoreDataManager.shared = CoreDataManager(modelName: "localTweets")
-            CoreDataManager.defaultClass = "localTweets"
-            
-            CoreDataManager.shared.load(completion: nil)
-            
-            
-        }
-        
-       
-        
-        CoreDataManager.shared = CoreDataManager(modelName: "MyFolders")
-            CoreDataManager.defaultClass = "MyFolders"
-            
-            CoreDataManager.shared.load(completion: nil)
-       */
-     
-        
-    }
-    
-    
-    
-    
-    
-    //i want to return a value when the request is done so i pass a closure as a param
-    func retrieveOneImage(url: String, completion: @escaping (Data?) -> ()){
-        
-        
-        networker.image(url: url) { data, error in
-            if let data = data {
-               // let image = UIImage(data: data)
-                
-                //return data from retrieveOneImage func
-                completion(data)
-                
-                
-                    
-                }else{
-               
-                    completion(data)
-                }
-                
-            }
-        
-            
-        }
-    
-    func loadVideoImage(){
-        
-    }
-    
-    func retrieveMultipleImages(urls: [String], completion: @escaping ([Data]?) -> ()){
-        
-        
-        //pass in urls and result of complettion
-        networker.downloadImages(urls: urls) { data, images,error in
-            
-            completion(images)
-
-        }
-        
-     
-        }
-    
-    //text: String?
-    //id: String
-    //media: [String]?
-    
-}
 
 
 
@@ -580,7 +281,6 @@ class MediaTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    var viewModel = mediaTableViewCellViewModel()
     
     
     
@@ -594,6 +294,128 @@ class MediaTableViewCell: UITableViewCell {
 
     static let identifier = "MediaTableViewCell"
     
+  
+    
+    var viewModel = mediaTableViewCellViewModel(tweet: retrievedTweet(id: "", posttext: "", type: "",urls: [String]()))
+    
+    
+    func loadTweet(tweet: retrievedTweet?){
+        
+        let tweetData = retrievedTweet(id: tweet?.id ?? "", posttext: tweet?.posttext ?? "", type: tweet?.type ?? "" , urls: tweet?.urls ?? [])
+        
+        viewModel = mediaTableViewCellViewModel(tweet: tweetData)
+        
+        
+        
+        postTextLabel.text = tweet?.posttext
+        
+        image1.image = nil
+        
+       
+        
+        let postIdentifier = tweet?.id ?? ""
+        
+         representedIdentifier = postIdentifier
+        
+        //if cell id == post.id
+        //cell hasnt bn recycled
+        //set image to imageVIew
+        
+        
+        
+        if(representedIdentifier == postIdentifier){
+        if(tweet?.type == "video"){
+            
+             playButton.isHidden = false
+            
+             imagesView.isHidden = false
+             
+             imagesStackViewR.isHidden = true
+             image1.isHidden = false
+            
+             image1.image = nil
+            
+            let savedTweetImageUrls = (tweet?.urls) ?? []
+         
+            
+            
+            let savedTweet = saveTweetData(id: UUID(), text: (tweet?.posttext) ?? ""  , type: tweet?.type ?? "", key: (tweet?.id) ?? "" , media: savedTweetImageUrls)
+            
+            
+            viewModel.savedTweets[(tweet?.id)!] = savedTweet
+            
+            viewModel.LoadImage{ downloadedImage in
+                if let image = downloadedImage{
+                    self.image1.image = image
+                }
+                
+            }
+            
+        }
+        
+        if(tweet?.type == "photo"){
+            
+            playButton.isHidden = true
+            
+            let tweetImageUrls = (tweet?.urls) ?? []
+         
+            
+            
+            let savedTweet = saveTweetData(id: UUID(), text: (tweet?.posttext) ?? ""  , type: tweet?.type ?? "", key: (tweet?.id) ?? "" , media: tweetImageUrls)
+            
+            
+            viewModel.savedTweets[(tweet?.id)!] = savedTweet
+            
+            
+            
+            if(tweetImageUrls.count == 1){
+            
+             imagesView.isHidden = false
+             imagesView.layer.cornerRadius = 8
+             imagesStackViewR.isHidden = true
+             image1.isHidden = false
+                
+                viewModel.LoadImage{ downloadedImage in
+                    if let image = downloadedImage{
+                        self.image1.image = image
+                    }
+                    
+                }
+                
+                
+            }
+            
+            if(tweetImageUrls.count > 1){
+                
+                imagesStackViewR.isHidden = false
+               
+                imagesView.isHidden = false
+                
+                viewModel.LoadImages{ downloadedImages in
+                    if let images = downloadedImages{
+                        var i = 0
+                        
+                        for image in images{
+                            
+                        self.Images[i]?.image = nil
+                        self.Images[i]?.isHidden = false
+                    
+                        self.imagesView.layer.cornerRadius = 8
+                    
+                        self.Images[i]?.image = image
+                        
+                        
+                    i = i + 1
+                        }
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+    }
     
     //using data from view MOdel to load views
     func loadSavedTweet(_ savedTweetViewModel: savedTweetsMediaViewModel){
@@ -610,6 +432,9 @@ class MediaTableViewCell: UITableViewCell {
         
         //if cell id == post.id
         //cell hasnt bn recycled
+        //set image to imageVIew
+        
+        
         
         if(representedIdentifier == postIdentifier){
         if(savedTweetViewModel.type == "video"){
@@ -691,217 +516,11 @@ class MediaTableViewCell: UITableViewCell {
         }
         
         
-        
-        
-        
-      /*
-       
-       var Imageurl = ""
-       
-       if(savedTweetViewModel.type == "video"){
-            
-            playButton.isHidden = false
-           
-            imagesView.isHidden = false
-            imagesView.layer.cornerRadius = 8
-            imagesStackViewR.isHidden = true
-            image1.isHidden = false
-           
-           
-            
-            Imageurl = savedTweetViewModel.urls?[0] ?? ""
-            
-            if let imageData = imagesDataDisc.object(forKey: (savedTweetViewModel.id) as NSString){
-                
-               // let data = imagesDataDisc[(feedposts?.id)!]![0]
-                
-                let data = imageData[0]
-                let image = UIImage(data: data as! Data)
-                if( representedIdentifier == representedIdentifier){
-                 image1.image = image
-                    
-                }
-                
-            }
-            else{
-            
-            viewModel.retrieveOneImage(url: Imageurl) { downloadedImage in
-                if let image_data = downloadedImage{
-                    //image from API
-                    let image = UIImage(data: image_data)
-                    
-                    //append image in array because we want to make this function usable for photos
-                    var imagesData = [Data]()
-                    imagesData.append(image_data)
-                    
-                    //checking if image is appended to right cell
-                    
-                    if( self.representedIdentifier == representedCellIdentifier){
-                        DispatchQueue.main.async {
-                        self.image1.image = image
-                            
-                            //append image to local cache
-                            self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
-                            
-                        }
-                    }
-                    if(self.representedIdentifier != representedCellIdentifier){
-                        DispatchQueue.main.async {
-                        self.image1.image = nil
-                        }
-                    }
-                }else{
-                    DispatchQueue.main.async {
-                    self.image1.image = nil
-                    }
-                }
-            }
-        }
-            
-        }*/
-        
-     /*   if(savedTweetViewModel.type == "photo"){
-            
-            playButton.isHidden = true
-            
-            var imageUrls = [String]()
-            Imageurl = savedTweetViewModel.urls?[0] ?? ""
-            
-            
-            
-            for image in savedTweetViewModel.urls ?? [] {
-                imageUrls.append(image)
-            }
-            
-            var savedTweetUrls = savedTweetViewModel.urls ?? []
-          
-            
-            
-            if(savedTweetUrls.count == 1){
-            
-             imagesView.isHidden = false
-             imagesView.layer.cornerRadius = 8
-             imagesStackViewR.isHidden = true
-             image1.isHidden = false
-            
-             image1.image = nil
-                
-                if let imageData = imagesDataDisc.object(forKey: (savedTweetViewModel.id) as NSString){
-                    
-                   // let data = imagesDataDisc[(feedposts?.id)!]![0]
-                    
-                    let data = imageData[0]
-                    let image = UIImage(data: data as! Data)
-                    if( representedIdentifier == representedIdentifier){
-                     image1.image = image
-                        
-                    }
-                    
-                }
-               
-                else{
-                    
-                    viewModel.retrieveOneImage(url: Imageurl) { downloadedImage in
-                        if let image_data = downloadedImage{
-                            let image = UIImage(data: image_data)
-                            
-                            var imagesData = [Data]()
-                            imagesData.append(image_data)
-                            
-                            if( self.representedIdentifier == representedCellIdentifier){
-                                DispatchQueue.main.async {
-                                self.image1.image = image
-                                    
-                                    self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
-                                    
-                                }
-                            }
-                            if(self.representedIdentifier != representedCellIdentifier){
-                                DispatchQueue.main.async {
-                                self.image1.image = nil
-                                }
-                            }
-                        }else{
-                            DispatchQueue.main.async {
-                            self.image1.image = nil
-                            }
-                        }
-                    }
-                    
-                 
-                
-            }
-            }
-            
-            if(savedTweetUrls.count > 1){
-                 imagesStackViewR.isHidden = false
-                
-                 imagesView.isHidden = false
-                
-                if let imagesData = imagesDataDisc.object(forKey: (savedTweetViewModel.id) as NSString){
-                    var i = 0
-                    for picture in imagesData{
-                        
-                        let image = UIImage(data: picture as! Data)
-                        
-                        DispatchQueue.main.async {
-                            if( self.representedIdentifier == representedCellIdentifier){
-                                self.Images[i]?.image = nil
-                                self.Images[i]?.isHidden = false
-                            
-                                self.imagesView.layer.cornerRadius = 8
-                            
-                                self.Images[i]?.image = image
-                                
-                                
-                            
-                            i = i + 1
-                            }
-                        }
-                    }
-                    
-                }else{
-                    
-                    
-                    viewModel.retrieveMultipleImages(urls: imageUrls) { downloaded_images in
-                        
-                        if let images = downloaded_images{
-                            var i = 0
-                        var imagesData = [Data]()
-                            
-                            for picture in images{
-                            let image = UIImage(data: picture)
-                                imagesData.append(picture)
-                            DispatchQueue.main.async {
-                                
-                                if( self.representedIdentifier == representedCellIdentifier){
-                                    
-                                    self.Images[i]?.image = nil
-                                    self.Images[i]?.isHidden = false
-                                
-                                    self.imagesView.layer.cornerRadius = 8
-                                
-                                    self.Images[i]?.image = image
-                                    
-                                    self.imagesDataDisc.setObject(imagesData as NSArray, forKey: (savedTweetViewModel.id) as NSString)
-                                    
-                               // self.imagesDataDisc[(feedposts?.id)!] = imagesData
-                                
-                                i = i + 1
-                                }
-                            }
-                        }
-                        }
-                    }
-                    
-                 
-            }
-            }
-            
-        }*/
     }
     
-    func loadViews(feedposts: Tweet?) {
+   
+    
+   /* func loadViews(feedposts: Tweet?) {
         
         
           userImgView.layer.cornerRadius =   userImgView.frame.size.width / 2
@@ -1042,10 +661,10 @@ class MediaTableViewCell: UITableViewCell {
                     imageUrls.append(image.url ?? "")
                 }
                 
-                let savedTweet = saveTweetData(id: UUID(), text: (feedposts?.text) ?? ""  , type: imageDetatils[0].type, key: (feedposts?.id) ?? "" , media: imageUrls)
+               // let savedTweet = saveTweetData(id: UUID(), text: (feedposts?.text) ?? ""  , type: imageDetatils[0].type, key: (feedposts?.id) ?? "" , media: imageUrls)
                 
                 
-                viewModel.savedTweets[(feedposts?.id)!] = savedTweet
+              //  viewModel.savedTweets[(feedposts?.id)!] = savedTweet
                 
                 
                 
@@ -1190,7 +809,7 @@ class MediaTableViewCell: UITableViewCell {
         
         
         
-    }
+    }*/
     
     func setupConstrains(){
         
