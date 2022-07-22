@@ -67,6 +67,11 @@ class SavedBookmarksVCTests: XCTestCase {
         
         
     }
+    
+    func test_tableview_initial_state(){
+        //tablview has 0 rows when viewdidload is initiaaly called
+        XCTAssertEqual(sut.tableview.numberOfRows(inSection: 0), 0)
+    }
         
         func test_fetched_tweets_from_CoreData(){
             
