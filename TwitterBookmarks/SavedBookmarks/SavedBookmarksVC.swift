@@ -12,6 +12,14 @@ import CoreData
 
 class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
+    init() {
+           super.init(nibName: nil, bundle: nil)
+       }
+       
+       required init?(coder: NSCoder) {
+           fatalError("init(coder:) has not been implemented")
+       }
+    
     var VCtitle = ""
     var folderName = ""
     
@@ -21,7 +29,7 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
     
    
     
-    private let tableview: UITableView = {
+     let tableview: UITableView = {
         let tableview = UITableView()
         tableview.register(TextTableViewCell.self, forCellReuseIdentifier: TextTableViewCell.identifier)
         tableview.register(MediaTableViewCell.self, forCellReuseIdentifier: MediaTableViewCell.identifier)
@@ -36,6 +44,8 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("Main page view controller has loaded")
         
         navigationItem.title = VCtitle
         
@@ -125,7 +135,7 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
                   let post = tweet.text as String?
                   let id = tweet.key as String?
                   
-                  return cell
+                  return cell 
               }
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell", for: indexPath)
