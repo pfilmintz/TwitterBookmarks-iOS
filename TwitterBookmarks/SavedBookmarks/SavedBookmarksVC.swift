@@ -60,20 +60,12 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
         tableview.reloadData()
         
         
-      //  setupFetchedResultsController()
-
+        
         // Do any additional setup after loading the view.
     }
     
-    func setupFetchedResultsController(){
-        fetchedResultsController = CoreDataManager.shared.createFoldersFetchedResultsController()
-        
-       
-        
-        fetchedResultsController.delegate = self
-        
-        try? fetchedResultsController.performFetch()
-    }
+   
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
        // #warning Incomplete implementation, return the number of sections
@@ -144,17 +136,6 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
         }
         
         
-        
-                
-        
-      /*  guard let walk = currentDog?.walks?[indexPath.row] as? Walk,
-           let walkDate = walk.date as Date?
-        else {
-            return cell
-            
-        }
-        
-        cell.textLabel?.text = dateFormatter.string(from: walkDate)*/
         
     }
     
