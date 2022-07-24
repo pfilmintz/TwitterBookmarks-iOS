@@ -26,6 +26,7 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
     var currentFolder: TweetFolder?
     
     var tweets: NSOrderedSet?
+    var savedTweets = [localTweet]()
     
    
     
@@ -66,8 +67,32 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
         
         tweets = CoreDataManager.shared.fetchSavedTweets(folderName)
         
+        //mapping tweets in core data to saved tweets fro tableview
         
+        if let tweets = tweets {
+        for tweet in tweets{
+            let tweet = tweet as! SavedTweet
+            
+            let type = tweet.type as String?
+            let post = tweet.text as String?
+            let id = tweet.key as String?
+            let url = tweet.media as [String]?
+            
+            //data in model
+            let savedpost = localTweet(id: id ?? "", posttext: post ?? "",type: type ?? "", urls: url )
+            
+            savedTweets.append(savedpost)
+            
+            
+            
+            
+        }
+        }
+        
+        
+        if(savedTweets.count > 0){
         tableview.reloadData()
+        }
         
         
         
@@ -85,7 +110,9 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        // #warning Incomplete implementation, return the number of rows
-        return tweets?.count ?? 0
+       // return tweets?.count ?? 0
+        
+        return savedTweets.count
    }
     
     var cellHeights = [IndexPath: CGFloat]()
@@ -102,8 +129,39 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      
         
+        
+        
+      
+        let tweet = savedTweets[indexPath.row]
+        
+        if(tweet.type == "photo" || tweet.type == "video"){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MediaTableViewCell", for: indexPath)
+            as! MediaTableViewCell
+            
+            
+            //pass data from model to VM
+            let savedTweet = savedTweetsMediaViewModel(tweet: tweet)
+            
+            //pass data from VM to View(cell)
+           cell.loadSavedTweet(savedTweet)
+            
+            return cell
+            
+        }else{
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextTableViewCell", for: indexPath)
+            as! TextTableViewCell
+            
+            
+            
+            
+            return cell
+            
+        }
+        
+        
+        /*
         
         if let tweets = tweets {
             let tweet = tweets[indexPath.row] as! SavedTweet
@@ -144,6 +202,8 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
             
             return cell
         }
+        
+        */
         
         
         

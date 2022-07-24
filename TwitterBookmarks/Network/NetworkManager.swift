@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+
 enum NetworkManagerError: Error{
     case badResponse(URLResponse?)
     case badData
@@ -39,6 +41,15 @@ class NetworkManager{
     
     
   //  let url = URL(string: "https://api.twitter.com/2/users/")
+    
+    /*
+     
+     On the surface, dependency injection (DI) means we pass dependencies into an object. Instead of allowing the object to decide its dependencies, we tell the object what to use.
+     DI is more than passing in instances. It promotes loosely coupled code that depends on protocols instead of concrete types. But we don’t have to go full- on with protocols to get benefits from DI. By providing a default, we give the object a way to specify its own dependency—unless it’s told otherwise.
+     
+     */
+    
+    //use singleton when you need to guarantee the uniquness of a class
     
     init(){
         
@@ -195,6 +206,8 @@ class NetworkManager{
         
     
     }
+    
+    
 
     
     func image(url: String,id: String,completion: @escaping (Data?,Error?) -> ()){
@@ -334,6 +347,171 @@ class NetworkManager{
 
 //making NetworkManager class conform to TwitterBookmarksNetworkProtocol protocol
 extension NetworkManager: TwitterBookmarksNetworkProtocol{
+    
+    
+    
+    
+    
+   //original calls here
+    
+    //mocking class creasts a mock of calls here
+    //for testing, calls in the mocking class will be called
+    
+    
+    func makeURL(url: String) -> (URL?){
+        let downloadUrl = URL(string: url)
+        
+        return downloadUrl
+    }
+    
+    func makeDownloadRequest(url: String,id: String,completion: @escaping (Data?,Error?) -> ()){
+        
+      
+        
+        
+        let task = session.downloadTask(with: URL(string:url)!){
+            localUrl, response, error in
+            if let error = error {
+                completion(nil, error)
+                return
+            }
+            
+            //making sure httpResponse is within 200 range ie success
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                      completion(nil, NetworkManagerError.badResponse(response))
+                      return
+                  }
+            //making sure data exists
+            guard let localUrl = localUrl else{
+                completion(nil,NetworkManagerError.badLocalUrl)
+                return
+                
+            }
+            
+            //decode data
+            
+            do{
+                
+                let data = try Data(contentsOf: localUrl)
+                
+                
+                completion(data, nil)
+                
+            }catch let error {
+                completion(nil,error)
+            }
+        }
+    task.resume()
+    }
+    
+    
+    
+    func downloadImagesX(urls: [String],id: String,completion: @escaping (Data?,[Data],Error?) -> ()){
+        
+        var images = [Data]()
+        if let imagesData = imagesDataDisc.object(forKey: (id) as NSString){
+            
+            
+            for picture in imagesData{
+                
+                let image = picture as! Data
+          
+                images.append(image)
+            }
+            
+            
+            completion(nil,images,nil)
+            
+            return
+            
+            
+        }
+        
+        let group = DispatchGroup()
+        
+        
+        var errorIfnoImagesareReturned =  NetworkManagerError.badUrl
+        var dataIfAllImagesAreReturned = Data()
+        
+        for url in urls{
+            //dispatch group calls brgin
+            group.enter()
+            let task = session.downloadTask(with: URL(string:url)!){
+                localUrl, response, error in
+                if let error = error {
+                    completion(nil,images, error)
+                    //dispatch group calls exits
+                    group.leave()
+                    return
+                }
+                
+                //making sure httpResponse is within 200 range ie success
+                guard let httpResponse = response as? HTTPURLResponse,
+                      (200...299).contains(httpResponse.statusCode) else {
+                          completion(nil,images, NetworkManagerError.badResponse(response))
+                          group.leave()
+                          return
+                      }
+                //making sure data exists
+                guard let localUrl = localUrl else{
+                    group.leave()
+                    completion(nil,images,NetworkManagerError.badLocalUrl)
+                    return
+                    
+                }
+                
+                //decode data
+                
+                do{
+                    
+                    let data = try Data(contentsOf: localUrl)
+                    dataIfAllImagesAreReturned  = data
+                    images.append(data)
+                    group.leave()
+                    
+                    
+                }catch let error {
+                    errorIfnoImagesareReturned = error as! NetworkManagerError
+                    group.leave()
+                }
+            }
+            task.resume()
+            
+            
+        }
+        
+        group.notify(queue: .global()){
+            //called when all group calls have bn executed
+            print(images)
+            
+            if(images.count > 1){
+                
+                self.imagesDataDisc.setObject(images as NSArray, forKey: (id) as NSString)
+                
+                completion(dataIfAllImagesAreReturned, images,nil)
+            }else{
+                completion(nil,images,errorIfnoImagesareReturned)
+            }
+            
+            
+        }
+        
+        
+    
+    }
+    
+    
+    
+    
+    func downloadimageUrl(url: String,id: String) -> URL? {
+        
+        let downloadedUrl = URL(string: url)
+        
+        return downloadedUrl
+    }
+    
+    
     func getPosts(parameters: [String: String],completion: @escaping ([Tweet]?,Includes?, Error?) -> ()){
         
         

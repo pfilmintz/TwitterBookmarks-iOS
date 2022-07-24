@@ -11,8 +11,71 @@ import XCTest
 
 class TwitterApiResponseTest: XCTestCase{
     
-    let TwitterResponseApi = MockTwitterResponseClient()
+   // let networker = NetworkManager.shared
+    
+    /*
+     
+     Testing the network layer is about ensuring that the app calls the correct API endpoints with the right parameters,
+     and ensuring that the app can deal with the response
+     
+     */
+    
+    var TwitterResponseApi: MockTwitterResponseClient!
     //let TwitterResponseApi = NetworkManager.shared
+    
+    
+    //test making Url request ie conditions to ensure request is built succesfuly
+    
+    //test response
+    
+  //  var loader: APIRequestLoader<NetworkManager>!
+    
+    override func setUp() {
+        
+        
+        let config = URLSessionConfiguration.ephemeral
+        config.protocolClasses = [MockURLProtocol.self]
+        
+        let urlSession = URLSession(configuration: config)
+        
+        TwitterResponseApi = MockTwitterResponseClient(urlSession: urlSession)
+        
+    }
+    
+    
+    //test should fail if network task isnt initiated
+    func test_download_image_success(){
+        //this is what i am expecting
+        let exp = expectation(description: "Return image from network")
+        
+        
+        let url = "https://pbs.twimg.com/media/FYRYScgXwAM7BJ1?format=jpg&name=medium"
+        let id = "1234"
+        
+        TwitterResponseApi.makeDownloadRequest(url: url, id: id) { imageData, error in
+            
+            
+            XCTAssertNotNil(imageData)
+            exp.fulfill()
+            
+        }
+        //wait within a time frame for expectation to be fullfilled
+        wait(for: [exp], timeout: 5)
+        
+        
+        
+    }
+    
+    
+    
+    /*
+     for image tests, test url validity
+     test decoding
+     */
+    
+    
+    
+    
     
     func testing_main_response_returned_successfully(){
         
@@ -65,3 +128,8 @@ class TwitterApiResponseTest: XCTestCase{
     }
     
 }
+/*private class NetworkManagerStub: NetworkManager{
+    override func downloadimage(url: String, id: String, completion: @escaping (Data?, Error?) -> ()) {
+        
+    }
+}*/

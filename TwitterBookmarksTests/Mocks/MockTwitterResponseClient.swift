@@ -11,9 +11,24 @@ import Foundation
 
 class MockTwitterResponseClient{
     
+    //mocking real network calls
+    //mocking Network Manager
+    
     enum MockServiceError: Error{
         case noData
         case decodingFailed
+        
+        var errorDescription: String? {
+            switch self{
+            case .noData:
+                return "No Data"
+            case .decodingFailed:
+                return "Decoding failed"
+           
+            }
+            
+        }
+        
         
         
     }
@@ -21,32 +36,102 @@ class MockTwitterResponseClient{
     var shouldReturnError = false
     var postsWereRetrieved = false
     
+    var shouldFailOnFetch:Bool = false
+        var dataToReturnOnSuccess:Data?
+    
   
+ //   var networker: NetworkManager = .shared
     
-    
-    
-  /*  init(_ shouldReturnError:Bool){
-        self.shouldReturnError = shouldReturnError
-    }*/
-    
-  //  let MockData =  "{\"id\": 1}".data(using: .utf8)
-    
-  /*  let MockTwitterResponse: [String: Any] = [
-        "data":
-            ["id": "24234224","text": "testing","attachments": ["3545"]],
-        "includes":
-                ["media_key":"adsdsa","type": "video","url":"23423","preview_image_url":"dsdfdsf"]
-    
-    ]*/
    
     
+    
+    
+    private var dataTask: URLSessionDataTask?
+    
+  
+    
+    let urlSession: URLSession
+   
+    init(urlSession: URLSession = .shared){
+        
+        self.urlSession = urlSession
+    }
 
     
 }
 
 extension MockTwitterResponseClient: TwitterBookmarksNetworkProtocol{
     
+    //mock requests here
     
+    
+    func makeDownloadRequest(url: String,id: String,completion: @escaping (Data?,Error?) -> ()){
+        
+        //check validity of Url and return Data is filepath isnt nil
+        let downloadUrl = URL(string: url)
+        
+        if(downloadUrl == nil){
+           
+            completion(nil,MockServiceError.noData)
+            return
+        }
+        
+        
+        let anyURL = downloadUrl!
+        
+        let bundle = Bundle(for: type(of:self))
+        let filePath = bundle.path(
+                     forResource: "play", ofType: "png")
+        
+        //mock data to be returned by fake urlSession.downloadTask (MockURLProtocol) and returned to test fxn
+        let anyData = try?
+                     Data(contentsOf:
+                     URL(fileURLWithPath: filePath!))
+        
+        
+        
+                //let anyData = Data("any data".utf8)
+                let anyResponse = HTTPURLResponse(url: anyURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+        
+        
+        MockURLProtocol.stub(url: anyURL, data: anyData, response: anyResponse, error: nil)
+
+        
+        urlSession.downloadTask(with: downloadUrl!) {  data, response, error in
+            
+            completion(anyData,nil)
+            
+            
+            
+        }.resume()
+        
+        
+        
+    }
+    
+    
+    
+    func downloadimageUrl(url: String, id: String) -> URL?  {
+        
+        let requestUrl = URL(string: url)
+        
+        return requestUrl
+        
+    }
+    
+    func downloadImagesX(urls: [String],id: String,completion: @escaping (Data?,[Data],Error?) -> ()){
+        var images = [Data]()
+        
+        
+        
+        completion(nil,images,nil)
+    }
+    
+    //
+    
+    
+    
+    //add test to check param of getposts
     
     
     func getPosts(parameters: [String : String], completion: @escaping ([Tweet]?,Includes?, Error?) -> ()) {
