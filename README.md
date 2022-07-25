@@ -4,3 +4,5 @@ Retrieves my bookmarks from Twitter unto the app so I can place them into folder
 - Network calls with URLSession
 - Local storage with Core Data
 - MVVM Design pattern
+
+![Screenshot](https://raw.githubusercontent.com/pfilmintz/TwitterBookmarks-iOS/main/assets/a.png)
