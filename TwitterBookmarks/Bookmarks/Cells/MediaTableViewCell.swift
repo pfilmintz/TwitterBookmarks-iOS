@@ -505,13 +505,13 @@ class MediaTableViewCell: UITableViewCell {
                  imagesStackViewR.isHidden = true
                  image1.isHidden = false
                     
-                    savedTweetViewModel.LoadImage{ downloadedImage in
+                    savedTweetViewModel.LoadImage{ [weak self] downloadedImage in
                         if let image = downloadedImage{
-                            if(self.representedIdentifier == postIdentifier){
-                            self.image1.image = image
+                            if(self?.representedIdentifier == postIdentifier){
+                            self?.image1.image = image
                             }
-                            if(self.representedIdentifier != postIdentifier){
-                                self.image1.image = nil
+                            if(self?.representedIdentifier != postIdentifier){
+                                self?.image1.image = nil
                             }
                         }
                         
@@ -526,19 +526,23 @@ class MediaTableViewCell: UITableViewCell {
                    
                  //   imagesView.isHidden = false
                     
-                    savedTweetViewModel.LoadImages{ downloadedImages in
+                    savedTweetViewModel.LoadImages{[weak self] downloadedImages in
+                        
+                        //weak self to avoid memory leaks
+                        //
+                        
                         if let images = downloadedImages{
-                            if(self.representedIdentifier == postIdentifier){
+                            if(self?.representedIdentifier == postIdentifier){
                             var i = 0
                             
                             for image in images{
                                 
-                            self.Images[i]?.image = nil
-                            self.Images[i]?.isHidden = false
+                            self?.Images[i]?.image = nil
+                            self?.Images[i]?.isHidden = false
                         
-                            self.imagesView.layer.cornerRadius = 8
+                            self?.imagesView.layer.cornerRadius = 8
                         
-                            self.Images[i]?.image = image
+                            self?.Images[i]?.image = image
                             
                             
                         i = i + 1

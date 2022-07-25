@@ -64,10 +64,11 @@ struct savedTweetsMediaViewModel{
         
           
            
+        
             
         retrieveOneImage2(url: urls?[0] ?? "",id: id ) { downloadedImage  in
                 
-                
+            //downloadedImage here is value returned by networker.image in retrieveOneImage2 closure as parameter for completion closure in retrieveOneImage2 fxn.
             
                 if let image_data = downloadedImage{
                     
@@ -101,6 +102,24 @@ struct savedTweetsMediaViewModel{
     //store in cache
     //convert data to uiimage
     
+    /*completion: @escaping (UIImage?) -> ()
+    
+    func completion(_ image: UIImage?){
+        networker.image(url: "url",id: "id") { data, error in
+            if let data = data {
+                
+                let image = UIImage(data: data)
+                
+                completion(image)
+                }else{
+               
+                    completion(nil)
+                    
+                }
+                
+            }
+    }*/
+    
     //i want to return a value when the request is done so i pass a closure as a param
     func retrieveOneImage2(url: String,id: String, completion: @escaping (UIImage?) -> ()) {
         
@@ -111,7 +130,7 @@ struct savedTweetsMediaViewModel{
                 
                 let image = UIImage(data: data)
                 
-                //return data from retrieveOneImage func
+                //calling closure means assigning value to parameters of closure
                 completion(image)
                
                 

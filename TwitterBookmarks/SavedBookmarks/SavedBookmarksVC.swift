@@ -10,6 +10,7 @@ import CoreData
 
 
 
+
 class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     init() {
@@ -126,7 +127,51 @@ class SavedBookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelega
     }
     
     
-   
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        /*
+         
+         twitter://user?screen_name=lorenb
+
+         twitter://user?id=12345
+
+         twitter://status?id=12345
+
+         twitter://timeline
+
+         twitter://mentions
+
+         twitter://messages
+
+         twitter://list?screen_name=lorenb&slug=abcd
+
+         twitter://post?message=hello%20world
+
+         twitter://post?message=hello%20world&in_reply_to_status_id=12345
+
+         twitter://search?query=%23hashtag
+         
+         */
+        
+        
+        let id = savedTweets[indexPath.row].id
+        
+        let url = "https://twitter.com/twitter/status/\(id)"
+        
+    
+        
+        let lowerCaseSocialNetworkName = "twitter"
+        
+         let appURL = URL(string: "\(lowerCaseSocialNetworkName)://status?id=\(id)")!
+         let application = UIApplication.shared
+       
+         if application.canOpenURL(appURL) {
+            application.open(appURL)
+         } else {
+            let webURL = URL(string:url)
+             application.open(webURL!)
+         }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

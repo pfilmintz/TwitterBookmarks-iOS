@@ -96,6 +96,9 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         //write unit test to confirm VC changes when VM updates
         
         viewModel.tweetImages.bind { [weak self]  tweetImagesX in
+            
+          
+            
             self?.images = tweetImagesX
         }
         
@@ -131,6 +134,26 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         return cellHeights[indexPath] ?? UITableView.automaticDimension
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        let id = posts[indexPath.row].id
+        
+        
+        let url = "https://twitter.com/twitter/status/\(id)"
+        
+        let lowerCaseSocialNetworkName = "twitter"
+        
+         let appURL = URL(string: "\(lowerCaseSocialNetworkName)://status?id=\(id)")!
+         let application = UIApplication.shared
+       
+         if application.canOpenURL(appURL) {
+            application.open(appURL)
+         } else {
+            let webURL = URL(string:url)
+             application.open(webURL!)
+         }
+    }
     
    
     
@@ -186,11 +209,11 @@ class BookmarksVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
                     if let savedTweet = savedTweet{
                     self?.addToBookmarkFolder(feedposts!,savedTweet.type,savedTweet.media,cell.viewModel)
                     }
-                //    self?.addToBookmarkFolder(feedposts!,imageDetatils[0].type, )
+                
                     
-                /*    if let self = self{
+                /*    if let strongSelf = self{
                     
-                        self.addToBookmarkFolder(feedposts!)
+                 strongSelf.addToBookmarkFolder(feedposts!)
                 }*/
                     
                 }

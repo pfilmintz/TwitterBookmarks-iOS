@@ -69,7 +69,7 @@ class NetworkManager{
     
     private func request(url: URL) -> URLRequest{
         var request = URLRequest(url: url)
-        let BearerToken =  "TTc5dWRTQW9HMFBFVU5sMHhCNDlMT2tGVUFXWWl5TGdhM0VfenVkbVJiWTh1OjE2NTgzODc2NTg4MDA6MTowOmF0OjE"
+        let BearerToken =  "YWFvVFg1OVE1X1ZOMWZCTmduN0haU0VFNk1RUDV3bTRQUjFQRU1kRVowbkV1OjE2NTg3NDI1MDQ4MzI6MToxOmF0OjE"
         
         request.addValue("Bearer \(BearerToken)", forHTTPHeaderField: "Authorization")
         

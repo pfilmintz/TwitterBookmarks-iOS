@@ -52,6 +52,10 @@ class TwitterApiResponseTest: XCTestCase{
         let url = "https://pbs.twimg.com/media/FYRYScgXwAM7BJ1?format=jpg&name=medium"
         let id = "1234"
         
+        //imageData, error are parameter of makeDownloadRequest trailing closure to be returned after the closure is called
+        
+        //escaping trailing closures are like callbacks, their parameters are to be returned after closure body has been exxecuted and closure is called
+        
         TwitterResponseApi.makeDownloadRequest(url: url, id: id) { imageData, error in
             
             
